@@ -2,11 +2,13 @@ package uz.itschool.geo.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +19,11 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,16 +36,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.Category
 import uz.itschool.geo.R
+import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
+import uz.itschool.geo.ui.theme.myGreen
+import uz.itschool.geo.ui.theme.myLightBlue
 import uz.itschool.geo.ui.theme.myOrange
 import uz.itschool.geo.ui.theme.myRed
+import uz.itschool.geo.ui.theme.myYellow
 import uz.itschool.geo.ui.theme.whiteBackround
 
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen(navController: NavController){
 
     val categories = mutableListOf<Category>()
 
@@ -71,7 +84,8 @@ fun HomeScreen(){
                 horizontalArrangement = Arrangement.spacedBy(16.dp)){
 
                 items(categories){category ->
-                    CategoryItem(category = category)
+                    CategoryItem(category = category,
+                        navController = navController)
 
                 }
 
@@ -83,8 +97,10 @@ fun HomeScreen(){
             Competition()
         }
 
-        Box(modifier = Modifier.align(Alignment.BottomCenter)
-            .fillMaxWidth().padding(16.dp)){
+        Box(modifier = Modifier
+            .align(Alignment.BottomCenter)
+            .fillMaxWidth()
+            .padding(16.dp)){
             HomeBottomBar()
         }
 
@@ -97,11 +113,14 @@ fun HomeScreen(){
 
 
 @Composable
-fun CategoryItem(category: Category){
+fun CategoryItem(category: Category, navController: NavController){
 
     Box(modifier = Modifier
         .fillMaxWidth()
-        .clip(RoundedCornerShape(corner = CornerSize(20.dp)))){
+        .clip(RoundedCornerShape(corner = CornerSize(20.dp)))
+        .clickable {
+            categoryItemClicked(navController)
+        }){
 
         Column(modifier = Modifier
             .fillMaxWidth()
@@ -185,19 +204,38 @@ fun HomeBottomBar(){
         .padding(5.dp)
         ){
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(painter = painterResource(id = R.drawable.trophy),
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth()) {
+
+
+            Icon(imageVector = Icons.Default.Star,
                 contentDescription = null,
+                tint = myYellow,
                 modifier = Modifier.size(50.dp))
+
+            Icon(imageVector = Icons.Default.ShoppingCart,
+                contentDescription = null,
+                tint = myGreen,
+                modifier = Modifier.size(50.dp))
+
+            Icon(imageVector = Icons.Default.Settings,
+                contentDescription = null,
+                tint = myLightBlue,
+                modifier = Modifier.size(50.dp))
+
         }
     }
 
 }
 
-
+fun categoryItemClicked(navController: NavController){
+    navController.navigate(Screens.Level.route)
+}
 
 @Preview(showBackground = true)
 @Composable
 fun hometest(){
-    HomeScreen()
+    val navController = rememberNavController()
+    HomeScreen(navController)
 }
