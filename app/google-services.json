@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "435635567740",
+    "project_id": "geoxer-2348c",
+    "storage_bucket": "geoxer-2348c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435635567740:android:c3b0c7c154288fe78b9df9",
+        "android_client_info": {
+          "package_name": "uz.itschool.geo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcHdjsYww31mgbsNBrXmueloLUf3MgLxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
