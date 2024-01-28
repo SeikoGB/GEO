@@ -26,10 +26,14 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -40,6 +44,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.Category
 import uz.itschool.geo.R
+import uz.itschool.geo.localDatabase.AppDataBase
 import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
 import uz.itschool.geo.ui.theme.myGreen
@@ -60,6 +65,17 @@ fun HomeScreen(navController: NavController){
     categories.add(Category("By flag", "gkf", 45))
     categories.add(Category("By flag", "gkf", 45))
 
+    val context = LocalContext.current
+
+    val appDatabase: AppDataBase by lazy {
+        AppDataBase.getInstance(context)
+    }
+
+    val smt by remember {
+        mutableStateOf(appDatabase.getCountryDao().getAllCountries()[0].name)
+    }
+
+
     Box(modifier = Modifier
         .fillMaxSize()
         .background(whiteBackround),
@@ -73,8 +89,8 @@ fun HomeScreen(navController: NavController){
             .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
 
-            Text(text = "Countries",
-                fontSize = 25.sp,
+            Text(text = smt,
+                fontSize = 30.sp,
                 color = Color.White)
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -88,11 +104,9 @@ fun HomeScreen(navController: NavController){
                         navController = navController)
 
                 }
-
             }
 
             Spacer(modifier = Modifier.height(20.dp))
-
 
             Competition()
         }
@@ -103,11 +117,6 @@ fun HomeScreen(navController: NavController){
             .padding(16.dp)){
             HomeBottomBar()
         }
-
-
-
-
-
     }
 }
 
@@ -146,8 +155,6 @@ fun CategoryItem(category: Category, navController: NavController){
 
         }
     }
-
-
 }
 
 
@@ -226,7 +233,6 @@ fun HomeBottomBar(){
 
         }
     }
-
 }
 
 fun categoryItemClicked(navController: NavController){
