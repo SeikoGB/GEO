@@ -1,9 +1,11 @@
 package uz.itschool.geo.localDatabase.dao
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import uz.itschool.geo.localDatabase.entity.Country
 
+@Dao
 interface CountryDao {
 
     @Insert

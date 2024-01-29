@@ -71,9 +71,6 @@ fun HomeScreen(navController: NavController){
         AppDataBase.getInstance(context)
     }
 
-    val smt by remember {
-        mutableStateOf(appDatabase.getCountryDao().getAllCountries()[0].name)
-    }
 
 
     Box(modifier = Modifier
@@ -89,7 +86,7 @@ fun HomeScreen(navController: NavController){
             .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
 
-            Text(text = smt,
+            Text(text = "Country",
                 fontSize = 30.sp,
                 color = Color.White)
 
