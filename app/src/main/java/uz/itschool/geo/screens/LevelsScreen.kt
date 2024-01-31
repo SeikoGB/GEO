@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import uz.itschool.geo.Level
+import uz.itschool.geo.LevelAdapter
 import uz.itschool.geo.R
 import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
@@ -41,10 +41,10 @@ import uz.itschool.geo.ui.theme.myBlue
 @Composable
 fun LevelsScreen(navController: NavController){
 
-    var levels = mutableListOf<Level>()
-    levels.add(Level())
-    levels.add(Level())
-    levels.add(Level())
+    var levels = mutableListOf<LevelAdapter>()
+    levels.add(LevelAdapter())
+    levels.add(LevelAdapter())
+    levels.add(LevelAdapter())
 
 
     Column(modifier = Modifier.fillMaxSize(),
@@ -131,7 +131,7 @@ fun TopBar(message: String,
 }
 
 @Composable
-fun LevelItem(level: Level){
+fun LevelItem(level: LevelAdapter){
 
     val progress:Float = (level.solvedTest/level.allTest).toFloat()
     val percent = (progress*100).toInt()
