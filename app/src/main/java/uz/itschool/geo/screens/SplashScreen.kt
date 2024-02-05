@@ -17,8 +17,6 @@ import uz.itschool.geo.localDatabase.entity.Country
 import uz.itschool.geo.model.LevelType
 import uz.itschool.geo.navigation.Screens
 
-
-
 @Composable
 fun SplashScreen(navHostController: NavController){
     val context = LocalContext.current
@@ -31,19 +29,15 @@ fun SplashScreen(navHostController: NavController){
 
     LaunchedEffect(key1 = true){
         delay(3000)
-        if(!check(shared)){
+        if(!shared.getDBState()){
+            shared.setDBState(true)
             createDB(appDatabase)
         }
         navHostController.navigate(Screens.Home.route)
     }
-
     Box(modifier = Modifier.fillMaxSize()){
 
     }
-}
-
-fun check(shared: SharedPrefHelper): Boolean{
-    return shared.getDBState()
 }
 
 fun createDB(appDataBase: AppDataBase){
@@ -114,46 +108,55 @@ fun createDB(appDataBase: AppDataBase){
         capital = "Rome",
         levelType = LevelType.STUDENT,
         flag = R.drawable.it))
+
     countryDao.addCountry(Country(
         name = "Japan",
         capital = "Tokyo",
         levelType = LevelType.STUDENT,
         flag = R.drawable.jp))
+
     countryDao.addCountry(Country(
         name = "Netherlands",
         capital = "Amsterdam",
         levelType = LevelType.STUDENT,
         flag = R.drawable.nl))
+
     countryDao.addCountry(Country(
         name = "Russia",
         capital = "Moscow",
         levelType = LevelType.STUDENT,
         flag = R.drawable.ru))
+
     countryDao.addCountry(Country(
         name = "South Korea",
         capital = "Seoul",
         levelType = LevelType.STUDENT,
         flag = R.drawable.kr))
+
     countryDao.addCountry(Country(
         name = "Spain",
         capital = "Madrid",
         levelType = LevelType.STUDENT,
         flag = R.drawable.fr))
+
     countryDao.addCountry(Country(
         name = "Switzerland",
         capital = "Bern",
         levelType = LevelType.STUDENT,
         flag = R.drawable.au))
+
     countryDao.addCountry(Country(
         name = "Turkey",
         capital = "Ankara",
         levelType = LevelType.STUDENT,
         flag = R.drawable.bt))
+
     countryDao.addCountry(Country(
         name = "United Kingdom",
         capital = "London",
         levelType = LevelType.STUDENT,
         flag = R.drawable.au))
+
     countryDao.addCountry(Country(
         name = "United States",
         capital = "Washington(Biden)",

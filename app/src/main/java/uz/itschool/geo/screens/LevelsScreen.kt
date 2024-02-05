@@ -1,6 +1,5 @@
 package uz.itschool.geo.screens
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,24 +26,41 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import uz.itschool.geo.Level
 import uz.itschool.geo.R
+import uz.itschool.geo.localDatabase.AppDataBase
+import uz.itschool.geo.localDatabase.dao.CountryDao
+import uz.itschool.geo.model.Level
+import uz.itschool.geo.model.LevelAdapter
 import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
 
+
+var levels = mutableListOf<LevelAdapter>()
+
 @Composable
 fun LevelsScreen(navController: NavController){
+    val context = LocalContext.current
 
-    var levels = mutableListOf<Level>()
-    levels.add(Level())
-    levels.add(Level())
-    levels.add(Level())
+    val appDatabase: AppDataBase by lazy {
+        AppDataBase.getInstance(context)
+    }
+
+    val countryDao = appDatabase.getCountryDao()
+
+    createLevels(countryDao, Level.STUDENT)
+
+
+
+
+
+
 
 
     Column(modifier = Modifier.fillMaxSize(),
@@ -131,7 +147,7 @@ fun TopBar(message: String,
 }
 
 @Composable
-fun LevelItem(level: Level){
+fun LevelItem(level: LevelAdapter){
 
     val progress:Float = (level.solvedTest/level.allTest).toFloat()
     val percent = (progress*100).toInt()
@@ -177,6 +193,11 @@ fun LevelItem(level: Level){
 
     Spacer(modifier = Modifier.height(16.dp))
 
+}
+
+
+fun createLevels(dao: CountryDao, level: Level){
+    levels.add(LevelAdapter(level, dao.getByLevel(level)))
 }
 
 

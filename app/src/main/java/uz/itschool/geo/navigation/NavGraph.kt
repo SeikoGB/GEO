@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import uz.itschool.geo.screens.HomeScreen
 import uz.itschool.geo.screens.LevelsScreen
 import uz.itschool.geo.screens.SplashScreen
+import uz.itschool.geo.screens.TestScreen
 
 
 @Composable
@@ -23,6 +24,9 @@ fun NavGraph(navController: NavHostController){
         }
         composable(route = Screens.Level.route){
             LevelsScreen(navController)
+        }
+        composable(route = Screens.Test.route){
+            TestScreen(navController = navController)
         }
     }
 }
