@@ -41,7 +41,6 @@ import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.Category
 import uz.itschool.geo.R
 import uz.itschool.geo.localDatabase.AppDataBase
-import uz.itschool.geo.model.Level
 import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
 import uz.itschool.geo.ui.theme.myGreen

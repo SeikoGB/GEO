@@ -36,8 +36,8 @@ import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.R
 import uz.itschool.geo.localDatabase.AppDataBase
 import uz.itschool.geo.localDatabase.dao.CountryDao
-import uz.itschool.geo.model.Level
 import uz.itschool.geo.model.LevelAdapter
+import uz.itschool.geo.model.LevelType
 import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
 
@@ -54,7 +54,7 @@ fun LevelsScreen(navController: NavController){
 
     val countryDao = appDatabase.getCountryDao()
 
-    createLevels(countryDao, Level.STUDENT)
+    createLevels(countryDao, LevelType.STUDENT)
 
 
 
@@ -196,7 +196,7 @@ fun LevelItem(level: LevelAdapter){
 }
 
 
-fun createLevels(dao: CountryDao, level: Level){
+fun createLevels(dao: CountryDao, level: LevelType){
     levels.add(LevelAdapter(level, dao.getByLevel(level)))
 }
 
