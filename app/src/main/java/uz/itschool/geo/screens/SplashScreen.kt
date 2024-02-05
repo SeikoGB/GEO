@@ -1,6 +1,5 @@
 package uz.itschool.geo.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -10,16 +9,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import androidx.room.Database
-import coil.compose.rememberAsyncImagePainter
-import com.google.firebase.Firebase
-import com.google.firebase.storage.storage
 import kotlinx.coroutines.delay
 import uz.itschool.geo.R
 import uz.itschool.geo.helpers.SharedPrefHelper
 import uz.itschool.geo.localDatabase.AppDataBase
 import uz.itschool.geo.localDatabase.entity.Country
-import uz.itschool.geo.model.Level
+import uz.itschool.geo.model.LevelType
 import uz.itschool.geo.navigation.Screens
 
 
@@ -57,113 +52,197 @@ fun createDB(appDataBase: AppDataBase){
     countryDao.addCountry(Country(
         name = "Argentina",
         capital = "Buenos Aires",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.ar))
 
     countryDao.addCountry(Country(
         name = "Australia",
         capital = "Canberra",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.au))
 
     countryDao.addCountry(Country(
         name = "Austria",
         capital = "Vienna",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.at))
 
     countryDao.addCountry(Country(
         name = "Brazil",
         capital = "Brasilia",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.br))
 
     countryDao.addCountry(Country(
         name = "Canada",
         capital = "Ottawa",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.ca))
 
     countryDao.addCountry(Country(
         name = "China",
         capital = "Beijing",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.cn))
 
     countryDao.addCountry(Country(
         name = "France",
         capital = "Paris",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.fr))
 
     countryDao.addCountry(Country(
         name = "Germany",
         capital = "Berlin",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.de))
 
     countryDao.addCountry(Country(
         name = "India",
         capital = "New Delhi",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.`in`))
 
     countryDao.addCountry(Country(
         name = "Iran",
         capital = "Tehran",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.ir))
 
     countryDao.addCountry(Country(
         name = "Italy",
         capital = "Rome",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.it))
     countryDao.addCountry(Country(
         name = "Japan",
         capital = "Tokyo",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.jp))
     countryDao.addCountry(Country(
         name = "Netherlands",
         capital = "Amsterdam",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.nl))
     countryDao.addCountry(Country(
         name = "Russia",
         capital = "Moscow",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.ru))
     countryDao.addCountry(Country(
         name = "South Korea",
         capital = "Seoul",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.kr))
     countryDao.addCountry(Country(
         name = "Spain",
         capital = "Madrid",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.fr))
     countryDao.addCountry(Country(
         name = "Switzerland",
         capital = "Bern",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.au))
     countryDao.addCountry(Country(
         name = "Turkey",
         capital = "Ankara",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.bt))
     countryDao.addCountry(Country(
         name = "United Kingdom",
         capital = "London",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.au))
     countryDao.addCountry(Country(
         name = "United States",
         capital = "Washington(Biden)",
-        level = Level.STUDENT,
+        levelType = LevelType.STUDENT,
         flag = R.drawable.au))
+    countryDao.addCountry(Country(
+        name = "Algeria",
+        capital = "Algiers",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.dz))
+    countryDao.addCountry(Country(
+        name = "Azerbaijan",
+        capital = "Baku)",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.az))
+    countryDao.addCountry(Country(
+        name = "Belgium",
+        capital = "Brussels",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.be))
+    countryDao.addCountry(Country(
+        name = "Colombia",
+        capital = "Bogota",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.co))
+    countryDao.addCountry(Country(
+        name = "Cuba",
+        capital = "Havana",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.cu))
+    countryDao.addCountry(Country(
+        name = "Czechia",
+        capital = "Prague",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.cz))
+    countryDao.addCountry(Country(
+        name = "Denmark",
+        capital = "Copnhagen",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.dk))
+    countryDao.addCountry(Country(
+        name = "Egypt",
+        capital = "Cairo",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.eg))
+    countryDao.addCountry(Country(
+        name = "England",
+        capital = "London",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.en))
+    countryDao.addCountry(Country(
+        name = "Iraq",
+        capital = "Baghdad",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.iq))
+    countryDao.addCountry(Country(
+        name = "Israel",
+        capital = "Tel Aviv/ West Jerusalem/ Jerusalem",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.il))
+    countryDao.addCountry(Country(
+        name = "Mexico",
+        capital = "Mexico city",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.mx))
+    countryDao.addCountry(Country(
+        name = "New Zealand",
+        capital = "Wellingtion",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.nz))
+    countryDao.addCountry(Country(
+        name = "Norway",
+        capital = "Oslo",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.no))
+    countryDao.addCountry(Country(
+        name = "Portugal",
+        capital = "Lisbon",
+        levelType = LevelType.TOURIST,
+        flag = R.drawable.pt))
+
+
+
+
+
+
+
+
+
 
 
 
