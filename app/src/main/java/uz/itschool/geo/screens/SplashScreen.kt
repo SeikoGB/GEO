@@ -108,46 +108,55 @@ fun createDB(appDataBase: AppDataBase){
         capital = "Rome",
         level = Level.STUDENT,
         flag = R.drawable.it))
+
     countryDao.addCountry(Country(
         name = "Japan",
         capital = "Tokyo",
         level = Level.STUDENT,
         flag = R.drawable.jp))
+
     countryDao.addCountry(Country(
         name = "Netherlands",
         capital = "Amsterdam",
         level = Level.STUDENT,
         flag = R.drawable.nl))
+
     countryDao.addCountry(Country(
         name = "Russia",
         capital = "Moscow",
         level = Level.STUDENT,
         flag = R.drawable.ru))
+
     countryDao.addCountry(Country(
         name = "South Korea",
         capital = "Seoul",
         level = Level.STUDENT,
         flag = R.drawable.kr))
+
     countryDao.addCountry(Country(
         name = "Spain",
         capital = "Madrid",
         level = Level.STUDENT,
         flag = R.drawable.fr))
+
     countryDao.addCountry(Country(
         name = "Switzerland",
         capital = "Bern",
         level = Level.STUDENT,
         flag = R.drawable.au))
+
     countryDao.addCountry(Country(
         name = "Turkey",
         capital = "Ankara",
         level = Level.STUDENT,
         flag = R.drawable.bt))
+
     countryDao.addCountry(Country(
         name = "United Kingdom",
         capital = "London",
         level = Level.STUDENT,
         flag = R.drawable.au))
+
     countryDao.addCountry(Country(
         name = "United States",
         capital = "Washington(Biden)",
