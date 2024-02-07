@@ -33,9 +33,9 @@ fun SplashScreen(navHostController: NavController){
     LaunchedEffect(key1 = true){
         delay(3000)
         if(!shared.getDBState()){
-            shared.setDBState(true)
             createDB(appDatabase)
-            createLevels(appDatabase)
+            //createLevels(appDatabase)
+            shared.setDBState(true)
         }
         navHostController.navigate(Screens.Home.route)
     }
