@@ -41,6 +41,7 @@ import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.Category
 import uz.itschool.geo.R
 import uz.itschool.geo.localDatabase.AppDataBase
+import uz.itschool.geo.model.CategoryType
 import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
 import uz.itschool.geo.ui.theme.myGreen
@@ -54,12 +55,10 @@ import uz.itschool.geo.ui.theme.whiteBackround
 @Composable
 fun HomeScreen(navController: NavController){
 
-    val categories = mutableListOf<Category>()
+    val categories = mutableListOf<CategoryType>()
 
-    categories.add(Category("By flag", "gkf", 45))
-    categories.add(Category("By flag", "gkf", 45))
-    categories.add(Category("By flag", "gkf", 45))
-    categories.add(Category("By flag", "gkf", 45))
+    categories.add(CategoryType.BY_FLAG)
+    categories.add(CategoryType.BY_CAPITAL)
 
     val context = LocalContext.current
 
@@ -113,7 +112,7 @@ fun HomeScreen(navController: NavController){
 
 
 @Composable
-fun CategoryItem(category: Category, navController: NavController){
+fun CategoryItem(category: CategoryType, navController: NavController){
 
     Box(modifier = Modifier
         .fillMaxWidth()
@@ -132,16 +131,16 @@ fun CategoryItem(category: Category, navController: NavController){
                 contentDescription = null,
                 modifier = Modifier.height(130.dp))
 
-            Text(text = category.name,
+            Text(text = category.text,
                 fontSize = 20.sp,
                 color = myRed,
                 fontWeight = FontWeight.Bold)
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            Text(text = "${category.solvedNumber}/194",
-                color = myRed,
-                fontSize = 12.sp)
+//            Text(text = "${category.solvedNumber}/194",
+//                color = myRed,
+//                fontSize = 12.sp)
 
 
         }

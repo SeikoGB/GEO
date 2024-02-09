@@ -13,6 +13,7 @@ import kotlinx.coroutines.delay
 import uz.itschool.geo.R
 import uz.itschool.geo.helpers.SharedPrefHelper
 import uz.itschool.geo.localDatabase.AppDataBase
+import uz.itschool.geo.localDatabase.Converters
 import uz.itschool.geo.localDatabase.dao.LevelDao
 import uz.itschool.geo.localDatabase.entity.Country
 import uz.itschool.geo.localDatabase.entity.Level
@@ -241,18 +242,6 @@ fun createDB(appDataBase: AppDataBase){
         capital = "Lisbon",
         levelType = LevelType.TOURIST,
         flag = R.drawable.pt))
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 fun createLevels(appDataBase: AppDataBase){
@@ -269,7 +258,7 @@ fun createLevels(appDataBase: AppDataBase){
             levelDao.addLevel(Level(
                 categoryType = c,
                 levelType = l,
-                countries = countries))
+                countries = Converters().fromCountryListToString(countries)))
         }
     }
 }

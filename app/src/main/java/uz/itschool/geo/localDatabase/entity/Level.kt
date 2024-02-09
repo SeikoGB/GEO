@@ -12,8 +12,6 @@ data class Level(
     val id: Int = 0,
     val levelType: LevelType,
     val categoryType: CategoryType,
-    val countries: MutableList<Country>,
+    val countries: String,
     val maxQuestion: Int = 20,
-
-
 )

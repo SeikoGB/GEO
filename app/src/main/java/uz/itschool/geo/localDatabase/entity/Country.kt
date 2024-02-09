@@ -7,7 +7,7 @@ import uz.itschool.geo.model.LevelType
 
 @Entity(tableName = "countries")
 data class Country(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val name: String,
     val capital: String,
