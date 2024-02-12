@@ -238,6 +238,25 @@ fun addCountriesToDB(countryDao: CountryDao){
         capital = "Lisbon",
         levelType = LevelType.TOURIST.text,
         flag = R.drawable.pt))
+    countryDao.addCountry(Country(
+        name = "Saudia Arabia",
+        capital = "Riyadh",
+        levelType = LevelType.TOURIST.text,
+        flag = R.drawable.sa))
+    countryDao.addCountry(Country(
+        name = "South Africa",
+        capital = "Pretoria-Bloemfontein-Cape Town",
+        levelType = LevelType.TOURIST.text,
+        flag = R.drawable.za))
+    countryDao.addCountry(Country(
+        name = "Sweden",
+        capital = "Stockholm",
+        levelType = LevelType.TOURIST.text,
+        flag = R.drawable.se))
+
+
+
+
 }
 
 fun createLevels(appDataBase: AppDataBase){
