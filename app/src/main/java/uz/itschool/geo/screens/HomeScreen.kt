@@ -99,6 +99,10 @@ fun HomeScreen(navController: NavController){
             Spacer(modifier = Modifier.height(20.dp))
 
             Competition()
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            LearnButton(navController)
         }
 
         Box(modifier = Modifier
@@ -189,6 +193,32 @@ fun Competition(){
     }
 }
 
+@Composable
+fun LearnButton(navController: NavController){
+
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .clip(RoundedCornerShape(corner = CornerSize(20.dp)))
+        .background(Color.White)
+        .padding(5.dp).clickable {
+            navController.navigate(Screens.Learn.route)
+        },
+    ){
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Image(painter = painterResource(id = R.drawable.trophy),
+                contentDescription = null,
+                modifier = Modifier.size(50.dp))
+
+            Text(modifier = Modifier.weight(1f),
+                text = "Learn",
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center,
+                color = myOrange
+            )
+        }
+    }
+}
 
 @Composable
 fun HomeBottomBar(){

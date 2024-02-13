@@ -1,5 +1,6 @@
 package uz.itschool.geo.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -31,7 +32,7 @@ fun SplashScreen(navHostController: NavController){
 
 
     LaunchedEffect(key1 = true){
-        delay(3000)
+        delay(1000)
         if(!shared.getDBState()){
             addCountriesToDB(appDatabase.getCountryDao())
             //createLevels(appDatabase)
@@ -160,7 +161,7 @@ fun addCountriesToDB(countryDao: CountryDao){
 
     countryDao.addCountry(Country(
         name = "United States",
-        capital = "Washington(Biden)",
+        capital = "Washington",
         levelType = LevelType.STUDENT.text,
         flag = R.drawable.au))
     countryDao.addCountry(Country(
@@ -170,7 +171,7 @@ fun addCountriesToDB(countryDao: CountryDao){
         flag = R.drawable.dz))
     countryDao.addCountry(Country(
         name = "Azerbaijan",
-        capital = "Baku)",
+        capital = "Baku",
         levelType = LevelType.TOURIST.text,
         flag = R.drawable.az))
     countryDao.addCountry(Country(

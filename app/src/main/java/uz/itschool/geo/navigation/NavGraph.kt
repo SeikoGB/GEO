@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import uz.itschool.geo.screens.HomeScreen
+import uz.itschool.geo.screens.LearnScreen
 import uz.itschool.geo.screens.LevelsScreen
 import uz.itschool.geo.screens.SplashScreen
 import uz.itschool.geo.screens.TestScreen
@@ -41,6 +42,10 @@ fun NavGraph(navController: NavHostController){
 
         composable(route = Screens.Test.route){
             TestScreen(navController = navController)
+        }
+        
+        composable(route = Screens.Learn.route){
+            LearnScreen(navController = navController)
         }
     }
 }

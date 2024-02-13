@@ -20,5 +20,6 @@ sealed class Screens(var route: String) {
     }
 
     object Test: Screens("test")
+    object Learn: Screens("learn")
 
 }

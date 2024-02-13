@@ -23,12 +23,11 @@ class SharedPrefHelper(context: Context) {
     }
 
     fun setDBState(state: Boolean){
-        editor.putBoolean(DB_STATE_KEY, state)
+        editor.putBoolean(DB_STATE_KEY, state).commit()
     }
 
     fun getDBState(): Boolean{
         return shared.getBoolean(DB_STATE_KEY, false)
     }
-
 
 }
