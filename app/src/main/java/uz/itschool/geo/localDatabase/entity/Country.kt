@@ -11,6 +11,6 @@ data class Country(
     val id: Int = 0,
     val name: String,
     val capital: String,
-    val levelType:LevelType,
+    val levelType:String,
     val flag:Int
 )

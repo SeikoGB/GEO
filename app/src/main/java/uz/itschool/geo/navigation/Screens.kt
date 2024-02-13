@@ -11,10 +11,10 @@ sealed class Screens(var route: String) {
     object Home: Screens("home")
 
     object Level: Screens("level/{$PASS_CATEGORY_TYPE}"){
-        fun passCategoryType(category: CategoryType): String{
+        fun passCategoryType(categoryName: String): String{
             return this.route.replace(
                 oldValue = "{$PASS_CATEGORY_TYPE}",
-                newValue = category.toString()
+                newValue = categoryName
             )
         }
     }

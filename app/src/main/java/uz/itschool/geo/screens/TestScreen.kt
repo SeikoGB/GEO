@@ -28,7 +28,7 @@ fun TestScreen(navController: NavController){
 
         TopBar(message = "Test", coins = 7, navController = navController)
 
-        Image(painter = painterResource(id = R.drawable.red_flag), contentDescription = null)
+        Image(painter = painterResource(id = R.drawable.red_flag), contentDescription = null, modifier = Modifier.padding(top=40.dp))
 
 
 

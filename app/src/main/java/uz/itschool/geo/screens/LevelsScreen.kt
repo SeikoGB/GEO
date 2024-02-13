@@ -1,5 +1,6 @@
 package uz.itschool.geo.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,6 +23,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,34 +40,26 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.R
 import uz.itschool.geo.localDatabase.AppDataBase
-import uz.itschool.geo.localDatabase.dao.CountryDao
 import uz.itschool.geo.localDatabase.entity.Level
-import uz.itschool.geo.model.LevelAdapter
-import uz.itschool.geo.model.LevelType
 import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
 
 
-var levels = mutableListOf<Level>()
+//var levels = mutableListOf<Level>()
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
-fun LevelsScreen(navController: NavController){
+fun LevelsScreen(navController: NavController,
+                 categoryName: String){
     val context = LocalContext.current
 
     val appDatabase: AppDataBase by lazy {
         AppDataBase.getInstance(context)
     }
 
-
-
-    getLevels(appDatabase)
-
-
-
-
-
-
-
+    val levels by remember {
+        mutableStateOf(appDatabase.getLevelDao().getLevelByCategory(categoryName))
+    }
 
 
 
@@ -111,14 +108,15 @@ fun TopBar(message: String,
             Icon(imageVector = Icons.Default.ArrowBack,
                 contentDescription = null,
                 tint = Color.White,
-                modifier = Modifier.size(30.dp)
+                modifier = Modifier
+                    .size(30.dp)
                     .clickable {
-                        navController.navigate(Screens.Home.route){
+                        navController.navigate(Screens.Home.route) {
                             popUpTo(navController.graph.id) {
                                 inclusive = true
                             }
                         }
-                })
+                    })
 
             Spacer(modifier = Modifier.width(10.dp))
 
@@ -166,7 +164,8 @@ fun LevelItem(level: Level){
         .background(Color.White)
         .padding(10.dp)){
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(horizontal = 16.dp)) {
 //            Text(text = "Level ${level.allTest}",
 //                fontSize = 20.sp)
@@ -199,14 +198,10 @@ fun LevelItem(level: Level){
 }
 
 
-fun getLevels(appDataBase: AppDataBase){
-    val levels = appDataBase.getLevelDao().getAllLevels()
-}
-
 
 @Preview(showBackground = true)
 @Composable
 fun levelTest(){
     val navController = rememberNavController()
-    LevelsScreen(navController)
+    LevelsScreen(navController, "By flag")
 }
