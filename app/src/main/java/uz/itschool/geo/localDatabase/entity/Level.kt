@@ -7,7 +7,7 @@ import uz.itschool.geo.model.LevelType
 
 @Entity(tableName = "levels")
 data class Level(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val levelType: LevelType,
     val categoryName: String,

@@ -15,6 +15,7 @@ import uz.itschool.geo.R
 import uz.itschool.geo.helpers.SharedPrefHelper
 import uz.itschool.geo.localDatabase.AppDataBase
 import uz.itschool.geo.localDatabase.dao.CountryDao
+import uz.itschool.geo.localDatabase.dao.LevelDao
 import uz.itschool.geo.localDatabase.entity.Country
 import uz.itschool.geo.localDatabase.entity.Level
 import uz.itschool.geo.model.CategoryType
@@ -35,7 +36,7 @@ fun SplashScreen(navHostController: NavController){
         delay(1000)
         if(!shared.getDBState()){
             addCountriesToDB(appDatabase.getCountryDao())
-            //createLevels(appDatabase)
+            createLevels(appDatabase.getLevelDao())
             shared.setDBState(true)
         }
         navHostController.navigate(Screens.Home.route)
@@ -260,10 +261,7 @@ fun addCountriesToDB(countryDao: CountryDao){
 
 }
 
-fun createLevels(appDataBase: AppDataBase){
-
-    val levelDao = appDataBase.getLevelDao()
-    val countryDao = appDataBase.getCountryDao()
+fun createLevels(levelDao: LevelDao){
 
     val categories = mutableListOf(CategoryType.BY_FLAG, CategoryType.BY_CAPITAL)
     val levelTypes = mutableListOf(LevelType.STUDENT, LevelType.TOURIST)

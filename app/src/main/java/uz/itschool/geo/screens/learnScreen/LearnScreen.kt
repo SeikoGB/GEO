@@ -1,7 +1,6 @@
-package uz.itschool.geo.screens
+package uz.itschool.geo.screens.learnScreen
 
 import android.annotation.SuppressLint
-import android.graphics.Paint.Style
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,6 +21,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -31,41 +31,31 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import uz.itschool.geo.localDatabase.AppDataBase
 import uz.itschool.geo.localDatabase.entity.Country
+import uz.itschool.geo.screens.TopBar
 import uz.itschool.geo.ui.theme.whiteBackround
 
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
-fun LearnScreen(navController: NavController) {
+fun LearnScreen(navController: NavController, viewModel: LearnViewModel) {
 
-    val context = LocalContext.current
-    val appDatabase: AppDataBase by lazy {
-        AppDataBase.getInstance(context)
-    }
+    val showDialogState = viewModel.showDialog.observeAsState().value
 
     val countries by remember {
-        mutableStateOf(appDatabase.getCountryDao().getAllCountries())
-    }
-    var dialogState by remember {
-        mutableStateOf(false)
-    }
-    var chosenCountry by remember {
-        mutableStateOf(countries[0])
+        mutableStateOf(viewModel.countryList)
     }
 
-    if (dialogState){
+    if (showDialogState == true){
         AlertDialog(
-            onDismissRequest = { dialogState = false },
-            text = { LearnDialog(country = chosenCountry)},
+            onDismissRequest = { viewModel.onDialogDismiss() },
+            text = { viewModel.chosenCountry.value?.let { LearnDialog(country = it) } },
             confirmButton = { /*TODO*/ })
     }
 
@@ -83,10 +73,9 @@ fun LearnScreen(navController: NavController) {
             vertical = 10.dp)){
 
             items(countries){country: Country ->
-                if(LearnCountryItem(country = country)){
-                    dialogState = true
-                    chosenCountry = country
-                }
+                LearnCountryItem(
+                    country = country,
+                    viewModel = viewModel)
                 Spacer(modifier = Modifier.height(10.dp))
             }
         }
@@ -94,11 +83,8 @@ fun LearnScreen(navController: NavController) {
 }
 
 @Composable
-fun LearnCountryItem(country: Country): Boolean{
+fun LearnCountryItem(country: Country, viewModel: LearnViewModel){
 
-    var isclicked by remember {
-        mutableStateOf(false)
-    }
 
     Box (modifier = Modifier
         .fillMaxWidth()
@@ -106,7 +92,8 @@ fun LearnCountryItem(country: Country): Boolean{
         .background(Color.White)
         .padding(10.dp)
         .clickable {
-            isclicked = true
+            viewModel.onOpenDialogClicked()
+            viewModel.setChosenCountry(country)
         }){
 
         Row (modifier = Modifier.fillMaxWidth()){
@@ -125,8 +112,6 @@ fun LearnCountryItem(country: Country): Boolean{
                 modifier = Modifier.weight(1f))
         }
     }
-
-    return isclicked
 }
 
 @Composable
@@ -163,5 +148,6 @@ fun LearnDialog(country: Country){
 @Composable
 fun learntest(){
     val navController = rememberNavController()
-    LearnScreen(navController)
+    val learnViewModel = LearnViewModel(LocalContext.current)
+    LearnScreen(navController, learnViewModel)
 }

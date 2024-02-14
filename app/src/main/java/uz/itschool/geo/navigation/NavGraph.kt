@@ -1,16 +1,18 @@
 package uz.itschool.geo.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import uz.itschool.geo.screens.HomeScreen
-import uz.itschool.geo.screens.LearnScreen
+import uz.itschool.geo.screens.learnScreen.LearnScreen
 import uz.itschool.geo.screens.LevelsScreen
 import uz.itschool.geo.screens.SplashScreen
 import uz.itschool.geo.screens.TestScreen
+import uz.itschool.geo.screens.learnScreen.LearnViewModel
 
 @Composable
 
@@ -45,7 +47,8 @@ fun NavGraph(navController: NavHostController){
         }
         
         composable(route = Screens.Learn.route){
-            LearnScreen(navController = navController)
+            val learnViewModel = LearnViewModel(LocalContext.current)
+            LearnScreen(navController = navController, viewModel = learnViewModel)
         }
     }
 }

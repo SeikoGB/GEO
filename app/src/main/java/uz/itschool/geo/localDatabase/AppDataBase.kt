@@ -20,7 +20,7 @@ abstract class AppDataBase: RoomDatabase() {
     abstract fun getLevelDao(): LevelDao
 
     companion object{
-        var instance: AppDataBase? = null
+        private var instance: AppDataBase? = null
 
         fun getInstance(context: Context): AppDataBase{
             if (instance==null){
