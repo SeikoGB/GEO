@@ -13,10 +13,10 @@ interface CountryDao {
     fun addCountry(country: Country)
 
     @Query("SELECT * FROM countries")
-    fun getAllCountries():ArrayList<Country>
+    fun getAllCountries():MutableList<Country>
 
     @Query("SELECT * FROM countries WHERE levelType = :l")
-    fun getByLevel(l: String):ArrayList<Country>
+    fun getByLevel(l: String):MutableList<Country>
 
 
 

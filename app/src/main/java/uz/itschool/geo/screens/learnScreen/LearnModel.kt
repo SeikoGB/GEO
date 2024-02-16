@@ -8,7 +8,7 @@ class LearnModel(context: Context){
 
     val localDB = AppDataBase.getInstance(context)
 
-    fun getCountryList():ArrayList<Country>{
+    fun getCountryList():MutableList<Country>{
         return localDB.getCountryDao().getAllCountries()
     }
 

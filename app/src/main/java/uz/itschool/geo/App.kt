@@ -1,3 +1,5 @@
+package uz.itschool.geo
+
 import android.app.Application
 
 class App : Application() {
