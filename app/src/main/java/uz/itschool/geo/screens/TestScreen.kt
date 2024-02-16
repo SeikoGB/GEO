@@ -25,10 +25,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.R
 import uz.itschool.geo.ui.theme.myBlue
+import uz.itschool.geo.ui.theme.whiteBackround
 
 @Composable
 fun TestScreen(navController: NavController){
-    Column(modifier = Modifier.fillMaxSize(),
+    Column(modifier = Modifier.fillMaxSize().background(whiteBackround),
         horizontalAlignment = Alignment.CenterHorizontally){
 
         TopBar(message = "Test", coins = 7, navController = navController)
@@ -97,9 +98,9 @@ fun OptionItem(text: String){
     Box(modifier = Modifier
         .fillMaxSize()
         .clip(RoundedCornerShape(15.dp))
-        .background(myBlue)
-        .padding(3.dp)
-        .clip(RoundedCornerShape(15.dp))
+//        .background(myBlue)
+//        .padding(3.dp)
+//        .clip(RoundedCornerShape(15.dp))
         .background(Color.White)
         .padding(10.dp),
         contentAlignment = Alignment.Center){
