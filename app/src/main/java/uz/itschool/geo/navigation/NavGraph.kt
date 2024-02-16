@@ -11,7 +11,7 @@ import uz.itschool.geo.screens.HomeScreen
 import uz.itschool.geo.screens.learnScreen.LearnScreen
 import uz.itschool.geo.screens.LevelsScreen
 import uz.itschool.geo.screens.SplashScreen
-import uz.itschool.geo.screens.TestScreen
+import uz.itschool.geo.screens.TestScreen.TestScreen
 import uz.itschool.geo.screens.learnScreen.LearnViewModel
 
 @Composable
