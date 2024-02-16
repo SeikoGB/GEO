@@ -11,7 +11,7 @@ class LearnViewModel(context: Context): ViewModel() {
 
 
     private val _countryList = MutableLiveData(learnModel.getCountryList())
-    val countryList: LiveData<MutableList<Country>> = _countryList
+    val countryList: LiveData<ArrayList<Country>> = _countryList
 
     private val _showDialog = MutableLiveData(false)
     val showDialog: LiveData<Boolean> = _showDialog
