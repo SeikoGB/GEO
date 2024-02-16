@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import uz.itschool.geo.screens.HomeScreen
 import uz.itschool.geo.screens.learnScreen.LearnScreen
-import uz.itschool.geo.screens.LevelsScreen
+import uz.itschool.geo.screens.levelScreen.LevelsScreen
 import uz.itschool.geo.screens.SplashScreen
 import uz.itschool.geo.screens.TestScreen.TestScreen
 import uz.itschool.geo.screens.learnScreen.LearnViewModel
