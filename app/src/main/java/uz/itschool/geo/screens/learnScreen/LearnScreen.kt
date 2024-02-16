@@ -48,9 +48,7 @@ fun LearnScreen(navController: NavController, viewModel: LearnViewModel) {
 
     val showDialogState = viewModel.showDialog.observeAsState().value
 
-    val countries by remember {
-        mutableStateOf(viewModel.countryList)
-    }
+    val countries = viewModel.countryList.observeAsState().value!!
 
     if (showDialogState == true){
         AlertDialog(
