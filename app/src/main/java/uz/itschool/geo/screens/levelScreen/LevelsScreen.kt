@@ -1,6 +1,7 @@
-package uz.itschool.geo.screens
+package uz.itschool.geo.screens.levelScreen
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,9 +25,9 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,28 +46,27 @@ import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
 
 
-//var levels = mutableListOf<Level>()
-
 @SuppressLint("MutableCollectionMutableState")
 @Composable
 fun LevelsScreen(navController: NavController,
-                 categoryName: String){
-    val context = LocalContext.current
+                 categoryName: String,
+                 viewModel: LevelViewModel){
 
-    val appDatabase: AppDataBase by lazy {
-        AppDataBase.getInstance(context)
-    }
 
-    val levels by remember {
-        mutableStateOf(appDatabase.getLevelDao().getLevelByCategory(categoryName))
-    }
+    viewModel.setLevelsByCategory(categoryName)
+    val levels = viewModel.currentLevels.observeAsState().value!!
+//
+//    Log.d("TAG", "LevelsScreen: ${categoryName}")
+//
+//    Log.d("TAG", "LevelsScreen: ${viewModel.currentLevels.value}")
+
 
 
 
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally){
 
-        TopBar("Sample text", 465, navController)
+        TopBar("Sample text", viewModel.shared.getCoinNumber(), navController)
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -78,7 +78,6 @@ fun LevelsScreen(navController: NavController,
         LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)){
             items(levels){level->
                 LevelItem(level)
-
             }
         }
     }
@@ -150,10 +149,7 @@ fun TopBar(message: String,
 @Composable
 fun LevelItem(level: Level){
 
-    //val progress:Float = (level.solvedTest/level.allTest).toFloat()
-    val percent = (1*100).toInt()
 
-    //Log.d("TAG", "LevelItem: $progress")
 
     Box(modifier = Modifier
         .fillMaxWidth()
@@ -172,7 +168,8 @@ fun LevelItem(level: Level){
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            //Text(text = "${level.solvedTest}/${level.allTest}")
+            Text(text = "${level.levelType}",
+                fontSize = 20.sp)
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -187,7 +184,7 @@ fun LevelItem(level: Level){
                     progress = 4f,
                     color = myBlue,)
 
-                Text(text = "${percent}%",
+                Text(text = "%",
                     color = Color.White)
             }
         }
@@ -203,5 +200,5 @@ fun LevelItem(level: Level){
 @Composable
 fun levelTest(){
     val navController = rememberNavController()
-    LevelsScreen(navController, "By flag")
+    LevelsScreen(navController, "By flag", LevelViewModel())
 }

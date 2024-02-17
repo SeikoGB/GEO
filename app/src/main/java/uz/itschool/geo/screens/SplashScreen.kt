@@ -268,7 +268,6 @@ fun createLevels(levelDao: LevelDao){
 
     for (c in categories){
         for (l in levelTypes){
-            //val countries = countryDao.getByLevel(l)
             levelDao.addLevel(Level(
                 categoryName = c.text,
                 levelType = l,))

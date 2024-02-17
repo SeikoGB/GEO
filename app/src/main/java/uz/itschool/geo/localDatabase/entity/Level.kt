@@ -12,4 +12,5 @@ data class Level(
     val levelType: LevelType,
     val categoryName: String,
     val maxQuestion: Int = 20,
+    val score: Int = 0,
 )

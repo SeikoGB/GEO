@@ -1,5 +1,6 @@
 package uz.itschool.geo.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,6 +26,9 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,7 +42,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import uz.itschool.geo.Category
 import uz.itschool.geo.R
 import uz.itschool.geo.localDatabase.AppDataBase
 import uz.itschool.geo.model.CategoryType
@@ -52,19 +55,15 @@ import uz.itschool.geo.ui.theme.myYellow
 import uz.itschool.geo.ui.theme.whiteBackround
 
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 fun HomeScreen(navController: NavController){
 
-    val categories = mutableListOf<CategoryType>()
-
-    categories.add(CategoryType.BY_FLAG)
-    categories.add(CategoryType.BY_CAPITAL)
-
-    val context = LocalContext.current
-
-    val appDatabase: AppDataBase by lazy {
-        AppDataBase.getInstance(context)
+    val categories by remember {
+        mutableStateOf(mutableListOf(CategoryType.BY_FLAG,
+            CategoryType.BY_CAPITAL))
     }
+
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -122,7 +121,7 @@ fun CategoryItem(category: CategoryType, navController: NavController){
         .fillMaxWidth()
         .clip(RoundedCornerShape(corner = CornerSize(20.dp)))
         .clickable {
-            categoryItemClicked(navController)
+            navController.navigate(Screens.Level.passCategoryType(category.text))
         }){
 
         Column(modifier = Modifier
@@ -131,7 +130,7 @@ fun CategoryItem(category: CategoryType, navController: NavController){
             .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
 
-            Image(painter = painterResource(id = R.drawable.red_flag),
+            Image(painter = painterResource(id = category.img),
                 contentDescription = null,
                 modifier = Modifier.height(130.dp))
 
@@ -141,12 +140,6 @@ fun CategoryItem(category: CategoryType, navController: NavController){
                 fontWeight = FontWeight.Bold)
 
             Spacer(modifier = Modifier.height(5.dp))
-
-//            Text(text = "${category.solvedNumber}/194",
-//                color = myRed,
-//                fontSize = 12.sp)
-
-
         }
     }
 }
@@ -200,7 +193,8 @@ fun LearnButton(navController: NavController){
         .fillMaxWidth()
         .clip(RoundedCornerShape(corner = CornerSize(20.dp)))
         .background(Color.White)
-        .padding(5.dp).clickable {
+        .padding(5.dp)
+        .clickable {
             navController.navigate(Screens.Learn.route)
         },
     ){
@@ -252,10 +246,6 @@ fun HomeBottomBar(){
 
         }
     }
-}
-
-fun categoryItemClicked(navController: NavController){
-    navController.navigate(Screens.Level.route)
 }
 
 @Preview(showBackground = true)

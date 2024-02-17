@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.R
-import uz.itschool.geo.screens.TopBar
+import uz.itschool.geo.screens.levelScreen.TopBar
 import uz.itschool.geo.ui.theme.myBlue
 
 @Composable

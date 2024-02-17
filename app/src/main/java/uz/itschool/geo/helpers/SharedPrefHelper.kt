@@ -11,6 +11,7 @@ class SharedPrefHelper(context: Context) {
     private val editor = shared.edit()
 
     private val DB_STATE_KEY = "db_state_key"
+    private val COIN_KEY = "coin_key"
 
     companion object{
         private var instance:SharedPrefHelper? = null
@@ -28,6 +29,14 @@ class SharedPrefHelper(context: Context) {
 
     fun getDBState(): Boolean{
         return shared.getBoolean(DB_STATE_KEY, false)
+    }
+
+    fun setCoinNumber(num: Int){
+        editor.putInt(COIN_KEY, num).commit()
+    }
+
+    fun getCoinNumber(): Int{
+        return shared.getInt(COIN_KEY, 0)
     }
 
 }

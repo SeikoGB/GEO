@@ -2,6 +2,7 @@ package uz.itschool.geo.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -9,10 +10,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import uz.itschool.geo.screens.HomeScreen
 import uz.itschool.geo.screens.learnScreen.LearnScreen
-import uz.itschool.geo.screens.LevelsScreen
+import uz.itschool.geo.screens.levelScreen.LevelsScreen
 import uz.itschool.geo.screens.SplashScreen
 import uz.itschool.geo.screens.TestScreen.TestScreen
 import uz.itschool.geo.screens.learnScreen.LearnViewModel
+import uz.itschool.geo.screens.levelScreen.LevelViewModel
 
 @Composable
 
@@ -35,10 +37,12 @@ fun NavGraph(navController: NavHostController){
             })
         ){navBackStackEntry ->
             val categoryName =navBackStackEntry.arguments?.getString(PASS_CATEGORY_TYPE)
+            val levelViewModel = LevelViewModel()
             if (categoryName != null){
                 LevelsScreen(
                     navController = navController,
-                    categoryName = categoryName.toString())
+                    categoryName = categoryName.toString(),
+                    viewModel = levelViewModel)
             }
         }
 
