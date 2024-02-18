@@ -26,8 +26,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,19 +51,11 @@ import uz.itschool.geo.ui.theme.myBlue
 @SuppressLint("MutableCollectionMutableState")
 @Composable
 fun LevelsScreen(navController: NavController,
-                 categoryName: String,
                  viewModel: LevelViewModel){
 
 
-    viewModel.setLevelsByCategory(categoryName)
     val levels = viewModel.currentLevels.observeAsState().value!!
-//
-//    Log.d("TAG", "LevelsScreen: ${categoryName}")
-//
-//    Log.d("TAG", "LevelsScreen: ${viewModel.currentLevels.value}")
-
-
-
+    
 
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally){
@@ -77,7 +71,7 @@ fun LevelsScreen(navController: NavController,
 
         LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)){
             items(levels){level->
-                LevelItem(level)
+                LevelItem(level, navController)
             }
         }
     }
@@ -110,11 +104,7 @@ fun TopBar(message: String,
                 modifier = Modifier
                     .size(30.dp)
                     .clickable {
-                        navController.navigate(Screens.Home.route) {
-                            popUpTo(navController.graph.id) {
-                                inclusive = true
-                            }
-                        }
+                        navController.popBackStack()
                     })
 
             Spacer(modifier = Modifier.width(10.dp))
@@ -147,13 +137,25 @@ fun TopBar(message: String,
 }
 
 @Composable
-fun LevelItem(level: Level){
+fun LevelItem(level: Level,
+              navController: NavController){
 
 
+    var progress by remember {
+        mutableFloatStateOf(0f)
+    }
+    progress = (level.score/level.maxQuestion).toFloat()
+    
+    val percentage by remember {
+        mutableStateOf((progress*100).toInt())
+    }
 
     Box(modifier = Modifier
         .fillMaxWidth()
         .clip(RoundedCornerShape(30))
+        .clickable {
+            navController.navigate(Screens.Test.route)
+        }
         .background(myBlue)
         .padding(3.dp)
         .clip(RoundedCornerShape(30))
@@ -163,8 +165,6 @@ fun LevelItem(level: Level){
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(horizontal = 16.dp)) {
-//            Text(text = "Level ${level.allTest}",
-//                fontSize = 20.sp)
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -181,12 +181,15 @@ fun LevelItem(level: Level){
                         .fillMaxWidth()
                         .height(20.dp)
                         .clip(RoundedCornerShape(50)),
-                    progress = 4f,
+                    progress = progress,
                     color = myBlue,)
 
-                Text(text = "%",
+                Text(text = "${percentage}%",
                     color = Color.White)
             }
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(text = "${level.score}/${level.maxQuestion}")
         }
     }
 
@@ -200,5 +203,5 @@ fun LevelItem(level: Level){
 @Composable
 fun levelTest(){
     val navController = rememberNavController()
-    LevelsScreen(navController, "By flag", LevelViewModel())
+    LevelsScreen(navController,  LevelViewModel("By flag"))
 }

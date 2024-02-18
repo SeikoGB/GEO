@@ -1,8 +1,8 @@
 package uz.itschool.geo.navigation
 
-import uz.itschool.geo.model.CategoryType
 
 const val PASS_CATEGORY_TYPE = "category_type"
+const val PASS_LEVEL_TYPE = "level_type"
 
 sealed class Screens(var route: String) {
 
@@ -19,7 +19,15 @@ sealed class Screens(var route: String) {
         }
     }
 
-    object Test: Screens("test")
+    object Test: Screens("test/{$PASS_LEVEL_TYPE}"){
+        fun passLevelType(levelName: String): String{
+            return this.route.replace(
+                oldValue = "{$PASS_LEVEL_TYPE}",
+                newValue = levelName
+            )
+        }
+    }
+
     object Learn: Screens("learn")
 
 }

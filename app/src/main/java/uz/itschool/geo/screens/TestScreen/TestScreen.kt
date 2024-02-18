@@ -28,32 +28,16 @@ import uz.itschool.geo.screens.levelScreen.TopBar
 import uz.itschool.geo.ui.theme.myBlue
 
 @Composable
-fun TestScreen(navController: NavController){
+fun TestScreen(navController: NavController,
+               viewModel: TestViewModel){
+
+    val countries = viewModel.countries
+
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally){
 
         TopBar(message = "Test", coins = 7, navController = navController)
 
-//        Image(painter = painterResource(id = R.drawable.red_flag), contentDescription = null, modifier = Modifier.padding(top=40.dp))
-//
-//
-//
-//        val options = mutableListOf<String>("qwerkah fsgafsdgjhh df", "dfgh", "zxcv", "bxcvx")
-//
-//        Box(modifier = Modifier.fillMaxSize().padding(16.dp)){
-//
-//            LazyVerticalGrid(columns = GridCells.Fixed(2),
-//                verticalArrangement = Arrangement.spacedBy(16.dp),
-//                horizontalArrangement = Arrangement.spacedBy(16.dp),
-//                modifier = Modifier.align(Alignment.BottomCenter)){
-//
-//                items(options){option ->
-//
-//                    OptionItem(text = option)
-//
-//                }
-//            }
-//        }
 
         Column(modifier = Modifier.fillMaxSize()
             .padding(16.dp),
@@ -115,5 +99,6 @@ fun OptionItem(text: String){
 @Composable
 fun testtest(){
     val navController = rememberNavController()
-    TestScreen(navController)
+    val viewModel = TestViewModel("levelName")
+    TestScreen(navController, viewModel)
 }
