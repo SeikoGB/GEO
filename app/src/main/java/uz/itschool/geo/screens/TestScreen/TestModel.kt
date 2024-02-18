@@ -6,7 +6,7 @@ import uz.itschool.geo.localDatabase.entity.Country
 
 class TestModel(l:String) {
     val localDB = AppDataBase.getInstance(App.app)
-    var countryList= localDB.getCountryDao().getByLevel(l)
+    var countryList:MutableList<Country> = localDB.getCountryDao().getByLevel(l)
 
 
 }

@@ -56,6 +56,8 @@ fun NavGraph(navController: NavHostController){
 
             if (levelName != null){
                 val viewModel = TestViewModel(levelName)
+                viewModel.startTime()
+                viewModel.randomiseList()
                 TestScreen(
                     navController = navController,
                     viewModel = viewModel)
