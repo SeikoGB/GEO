@@ -29,6 +29,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -153,7 +154,8 @@ fun LevelItem(level: Level,
         .fillMaxWidth()
         .clip(RoundedCornerShape(30))
         .clickable {
-            navController.navigate(Screens.Test.route)
+            navController.navigate(Screens.Test.passLevelAndCategoryType(level.levelType.text,
+                level.categoryName))
         }
         .background(myBlue)
         .padding(3.dp)
