@@ -1,5 +1,6 @@
 package uz.itschool.geo.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -8,10 +9,12 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import uz.itschool.geo.model.CategoryType
 import uz.itschool.geo.screens.HomeScreen
 import uz.itschool.geo.screens.learnScreen.LearnScreen
 import uz.itschool.geo.screens.levelScreen.LevelsScreen
 import uz.itschool.geo.screens.SplashScreen
+import uz.itschool.geo.screens.TestScreen.CapitalCityTestScreen
 import uz.itschool.geo.screens.TestScreen.TestScreen
 import uz.itschool.geo.screens.TestScreen.TestViewModel
 import uz.itschool.geo.screens.learnScreen.LearnViewModel
@@ -53,6 +56,9 @@ fun NavGraph(navController: NavHostController){
             })
         ){navBackStackEntry ->
             val levelName = navBackStackEntry.arguments?.getString(PASS_LEVEL_TYPE)
+            val categoryName = navBackStackEntry.arguments?.getString(PASS_CATEGORY_TYPE)
+
+            Log.d("TAG", "NavGraph: $categoryName")
 
             if (levelName != null){
                 val viewModel = TestViewModel(levelName)
@@ -61,6 +67,17 @@ fun NavGraph(navController: NavHostController){
                 TestScreen(
                     navController = navController,
                     viewModel = viewModel)
+
+                when(categoryName){
+                    "{${CategoryType.BY_FLAG.text}}" ->{
+                        Log.d("TAG", "NavGraph: flag ish")
+
+                    }
+                    "{${CategoryType.BY_CAPITAL.text}}" ->{
+                        CapitalCityTestScreen()
+                    }
+                }
+
             }
 
         }

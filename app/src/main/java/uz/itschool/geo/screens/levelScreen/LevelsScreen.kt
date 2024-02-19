@@ -154,7 +154,8 @@ fun LevelItem(level: Level,
         .fillMaxWidth()
         .clip(RoundedCornerShape(30))
         .clickable {
-            navController.navigate(Screens.Test.route)
+            navController.navigate(Screens.Test.passLevelAndCategoryType(level.levelType.text,
+                level.categoryName))
         }
         .background(myBlue)
         .padding(3.dp)

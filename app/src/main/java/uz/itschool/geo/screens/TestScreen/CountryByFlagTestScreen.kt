@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,7 +32,7 @@ import uz.itschool.geo.ui.theme.myBlue
 fun TestScreen(navController: NavController,
                viewModel: TestViewModel){
 
-    val countries = viewModel.countries
+    val countries = viewModel.countries.observeAsState().value!!
 
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally){
@@ -39,7 +40,8 @@ fun TestScreen(navController: NavController,
         TopBar(message = "Test", coins = 7, navController = navController)
 
 
-        Column(modifier = Modifier.fillMaxSize()
+        Column(modifier = Modifier
+            .fillMaxSize()
             .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
             Image(painter = painterResource(id = R.drawable.red_flag),
