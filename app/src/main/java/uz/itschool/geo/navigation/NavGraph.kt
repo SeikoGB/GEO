@@ -2,6 +2,7 @@ package uz.itschool.geo.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -12,7 +13,9 @@ import uz.itschool.geo.screens.learnScreen.LearnScreen
 import uz.itschool.geo.screens.levelScreen.LevelsScreen
 import uz.itschool.geo.screens.SplashScreen
 import uz.itschool.geo.screens.TestScreen.TestScreen
+import uz.itschool.geo.screens.TestScreen.TestViewModel
 import uz.itschool.geo.screens.learnScreen.LearnViewModel
+import uz.itschool.geo.screens.levelScreen.LevelViewModel
 
 @Composable
 
@@ -35,15 +38,31 @@ fun NavGraph(navController: NavHostController){
             })
         ){navBackStackEntry ->
             val categoryName =navBackStackEntry.arguments?.getString(PASS_CATEGORY_TYPE)
+
             if (categoryName != null){
+                val levelViewModel = LevelViewModel(categoryName)
                 LevelsScreen(
                     navController = navController,
-                    categoryName = categoryName.toString())
+                    viewModel = levelViewModel)
             }
         }
 
-        composable(route = Screens.Test.route){
-            TestScreen(navController = navController)
+        composable(route = Screens.Test.route,
+            arguments = listOf(navArgument(PASS_LEVEL_TYPE){
+                type = NavType.StringType
+            })
+        ){navBackStackEntry ->
+            val levelName = navBackStackEntry.arguments?.getString(PASS_LEVEL_TYPE)
+
+            if (levelName != null){
+                val viewModel = TestViewModel(levelName)
+                viewModel.startTime()
+                viewModel.randomiseList()
+                TestScreen(
+                    navController = navController,
+                    viewModel = viewModel)
+            }
+
         }
         
         composable(route = Screens.Learn.route){
