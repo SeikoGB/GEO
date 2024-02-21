@@ -162,7 +162,7 @@ fun addCountriesToDB(countryDao: CountryDao){
 
     countryDao.addCountry(Country(
         name = "United States",
-        capital = "Washington",
+        capital = "Washington,D.C.",
         levelType = LevelType.STUDENT.text,
         flag = R.drawable.au))
     countryDao.addCountry(Country(
@@ -255,6 +255,37 @@ fun addCountriesToDB(countryDao: CountryDao){
         capital = "Stockholm",
         levelType = LevelType.TOURIST.text,
         flag = R.drawable.se))
+    countryDao.addCountry(
+        Country(
+            name = "Syria",
+            capital = "Damascus",
+            levelType = LevelType.TOURIST.text,
+            flag = R.drawable.sy))
+    countryDao.addCountry(
+        Country(
+            name = "United Arabic Emirates",
+            capital = "Adu-Dhabi",
+            levelType = LevelType.TOURIST.text,
+            flag = R.drawable.ae))
+    countryDao.addCountry(
+        Country(
+            name = "Armenia",
+            capital = "Yerevan",
+            levelType = LevelType.DRIVER.text,
+            flag = R.drawable.am))
+    countryDao.addCountry(
+        Country(
+            name = "Chile",
+            capital = "Santiago",
+            levelType = LevelType.DRIVER.text,
+            flag = R.drawable.cl))
+    countryDao.addCountry(
+        Country(
+            name = "Croatia",
+            capital = "Zagreb",
+            levelType = LevelType.DRIVER.text,
+            flag = R.drawable.hr))
+
 
 
 
