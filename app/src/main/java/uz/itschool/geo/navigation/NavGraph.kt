@@ -58,18 +58,20 @@ fun NavGraph(navController: NavHostController){
             val levelName = navBackStackEntry.arguments?.getString(PASS_LEVEL_TYPE)
             val categoryName = navBackStackEntry.arguments?.getString(PASS_CATEGORY_TYPE)
 
-            Log.d("TAG", "NavGraph: $categoryName")
+
 
             if (levelName != null){
                 val viewModel = TestViewModel(levelName)
                 viewModel.startTime()
                 viewModel.randomiseList()
-                TestScreen(
-                    navController = navController,
-                    viewModel = viewModel)
+                Log.d("TAggG", "NavGraph: ${viewModel.countries.value!!}")
 
                 when(categoryName){
                     "{${CategoryType.BY_FLAG.text}}" ->{
+                        TestScreen(
+                            navController = navController,
+                            viewModel = viewModel)
+
                         Log.d("TAG", "NavGraph: flag ish")
 
                     }

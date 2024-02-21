@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
+import uz.itschool.geo.App
 import uz.itschool.geo.R
 import uz.itschool.geo.helpers.SharedPrefHelper
 import uz.itschool.geo.localDatabase.AppDataBase
@@ -24,7 +25,7 @@ import uz.itschool.geo.navigation.Screens
 
 @Composable
 fun SplashScreen(navHostController: NavController){
-    val context = LocalContext.current
+    val context = App.app
     val shared = SharedPrefHelper.getInstance(context)
 
     val appDatabase: AppDataBase by lazy {
