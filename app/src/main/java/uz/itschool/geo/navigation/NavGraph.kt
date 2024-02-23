@@ -60,10 +60,18 @@ fun NavGraph(navController: NavHostController){
 
 
 
+
+            Log.d("nav", "NavGraph: ${levelName}")
+
+
+
             if (levelName != null){
-                val viewModel = TestViewModel(levelName)
+                val l = levelName.drop(1).dropLast(1)
+                Log.d("re", "NavGraph: ${levelName}")
+
+                val viewModel = TestViewModel(l)
                 viewModel.startTime()
-                viewModel.randomiseList()
+                //viewModel.randomiseList()
                 Log.d("TAggG", "NavGraph: ${viewModel.countries.value!!}")
 
                 when(categoryName){
@@ -85,7 +93,7 @@ fun NavGraph(navController: NavHostController){
         }
         
         composable(route = Screens.Learn.route){
-            val learnViewModel = LearnViewModel(LocalContext.current)
+            val learnViewModel = LearnViewModel()
             LearnScreen(navController = navController, viewModel = learnViewModel)
         }
     }

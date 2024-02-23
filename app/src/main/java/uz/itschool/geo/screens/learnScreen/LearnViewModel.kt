@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import uz.itschool.geo.App
 import uz.itschool.geo.localDatabase.entity.Country
 
-class LearnViewModel(context: Context): ViewModel() {
+class LearnViewModel: ViewModel() {
+    private val context = App.app
     private val learnModel = LearnModel(context)
 
 

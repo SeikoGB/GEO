@@ -142,6 +142,6 @@ fun LearnDialog(country: Country){
 @Composable
 fun learntest(){
     val navController = rememberNavController()
-    val learnViewModel = LearnViewModel(LocalContext.current)
+    val learnViewModel = LearnViewModel()
     LearnScreen(navController, learnViewModel)
 }

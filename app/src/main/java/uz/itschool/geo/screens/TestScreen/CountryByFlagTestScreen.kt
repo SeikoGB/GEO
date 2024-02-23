@@ -1,19 +1,26 @@
 package uz.itschool.geo.screens.TestScreen
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,26 +39,46 @@ import uz.itschool.geo.ui.theme.myBlue
 fun TestScreen(navController: NavController,
                viewModel: TestViewModel){
 
+    var isRandomed by remember {
+        mutableStateOf(false)
+    }
+
+    if(!isRandomed){
+        viewModel.randomiseList()
+        isRandomed = true
+    }
+
     val countries = viewModel.countries.observeAsState().value!!
+    val timeProgress = viewModel.timeProgress.observeAsState().value!!
+    val questionNumber = viewModel.questionNumber.observeAsState().value!!
+
+
+    Log.d("TAG", "TestScreen: ${countries}")
+
+    val currentQuestion = viewModel.currentQuestion
+
+
 
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally){
 
-        TopBar(message = "Test", coins = 7, navController = navController)
+        TestTopBar(time = timeProgress)
 
 
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
-            Image(painter = painterResource(id = R.drawable.red_flag),
+            Image(painter = painterResource(id = currentQuestion.flag),
                 contentDescription = null,
                 modifier = Modifier.weight(1f))
 
             Column(modifier = Modifier.weight(1f)) {
                 Row(modifier = Modifier.weight(1f)) {
-                    Box(modifier = Modifier.weight(1f)){
-                        OptionItem(text = "dfsk")
+                    Box(modifier = Modifier
+                        .weight(1f)
+                        .clickable { viewModel.nextQuestion() }){
+                        OptionItem(text = currentQuestion.name)
                     }
                     Spacer(modifier = Modifier.width(16.dp))
 
@@ -95,6 +122,12 @@ fun OptionItem(text: String){
     }
 }
 
+@Composable
+fun TestTopBar(time: String){
+    Box(modifier = Modifier.fillMaxWidth()){
+        Text(text = time)
+    }
+}
 
 
 @Preview(showBackground = true)
