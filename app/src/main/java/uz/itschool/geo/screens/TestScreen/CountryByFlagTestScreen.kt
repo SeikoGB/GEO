@@ -34,23 +34,35 @@ import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.R
 import uz.itschool.geo.screens.levelScreen.TopBar
 import uz.itschool.geo.ui.theme.myBlue
+import uz.itschool.geo.ui.theme.whiteBackround
 
 @Composable
 fun TestScreen(navController: NavController,
                viewModel: TestViewModel){
 
-    var isRandomed by remember {
-        mutableStateOf(false)
-    }
+//    var isRandomed by remember {
+//        mutableStateOf(false)
+//    }
+//
+//    if(!isRandomed){
+//        viewModel.randomiseList()
+//        Log.d("random", "TestScreen: ${viewModel.countries.value}")
+//        isRandomed = true
+//    }
 
-    if(!isRandomed){
-        viewModel.randomiseList()
-        isRandomed = true
-    }
+    //viewModel.randomiseList()
+   // Log.d("rando", "TestScreen: ${viewModel.countries.value}")
+
 
     val countries = viewModel.countries.observeAsState().value!!
     val timeProgress = viewModel.timeProgress.observeAsState().value!!
     val questionNumber = viewModel.questionNumber.observeAsState().value!!
+
+
+
+
+
+
 
 
     Log.d("TAG", "TestScreen: ${countries}")
@@ -59,7 +71,7 @@ fun TestScreen(navController: NavController,
 
 
 
-    Column(modifier = Modifier.fillMaxSize(),
+    Column(modifier = Modifier.fillMaxSize().background(whiteBackround),
         horizontalAlignment = Alignment.CenterHorizontally){
 
         TestTopBar(time = timeProgress)
