@@ -43,10 +43,10 @@ class TestViewModel(val levelName: String): ViewModel() {
 
 
 
-//    fun randomiseList(){
-//        _countries.value!!.shuffle()
-//        currentQuestion = countries.value!![questionNumber.value!!]
-//    }
+    private fun randomiseList(){
+        _countries.value!!.shuffle()
+        currentQuestion = countries.value!![questionNumber.value!!]
+    }
 
     fun startTime() {
         val totalTime = time.toInt() * 1000L
@@ -64,8 +64,7 @@ class TestViewModel(val levelName: String): ViewModel() {
 
 
     init {
-        _countries.value!!.shuffle()
-        currentQuestion = countries.value!![questionNumber.value!!]
+        randomiseList()
     }
 
 

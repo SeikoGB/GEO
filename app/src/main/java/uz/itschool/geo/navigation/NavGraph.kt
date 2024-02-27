@@ -1,13 +1,10 @@
 package uz.itschool.geo.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -24,8 +21,9 @@ import uz.itschool.geo.screens.TestScreen.TestViewModel
 import uz.itschool.geo.screens.learnScreen.LearnViewModel
 import uz.itschool.geo.screens.levelScreen.LevelViewModel
 
-@Composable
+lateinit var viewModel: TestViewModel
 
+@Composable
 fun NavGraph(navController: NavHostController){
 
     NavHost(navController = navController,
@@ -65,30 +63,22 @@ fun NavGraph(navController: NavHostController){
             val categoryName = navBackStackEntry.arguments?.getString(PASS_CATEGORY_TYPE)
 
             if (levelName != null){
+                var viewModelCreated by remember {
+                    mutableStateOf(false)
+                }
 
-//                var isRandomed by remember {
-//                    mutableStateOf(false)
-//                }
-
-                val viewModel = TestViewModel(levelName.drop(1).dropLast(1))
-                viewModel.startTime()
-//                if (!isRandomed){
-//
-//                    isRandomed = true
-//                }
-                //viewModel.randomiseList()
-
-
-                Log.d("TAggG", "NavGraph: ${viewModel.countries.value!!}")
+                if (!viewModelCreated){
+                    viewModel = TestViewModel(levelName.drop(1).dropLast(1))
+                    viewModel.startTime()
+                    viewModelCreated = true
+                }
+                //Log.d("TAggG", "NavGraph: ${viewModel.countries.value!!}")
 
                 when(categoryName){
                     "{${CategoryType.BY_FLAG.text}}" ->{
                         TestScreen(
                             navController = navController,
                             viewModel = viewModel)
-
-                        Log.d("TAG", "NavGraph: flag ish")
-
                     }
                     "{${CategoryType.BY_CAPITAL.text}}" ->{
                         CapitalCityTestScreen()

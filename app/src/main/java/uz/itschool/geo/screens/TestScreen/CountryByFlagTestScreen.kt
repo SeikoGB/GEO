@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -71,7 +72,9 @@ fun TestScreen(navController: NavController,
 
 
 
-    Column(modifier = Modifier.fillMaxSize().background(whiteBackround),
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(whiteBackround),
         horizontalAlignment = Alignment.CenterHorizontally){
 
         TestTopBar(time = timeProgress)
@@ -81,15 +84,34 @@ fun TestScreen(navController: NavController,
             .fillMaxSize()
             .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
-            Image(painter = painterResource(id = currentQuestion.flag),
-                contentDescription = null,
-                modifier = Modifier.weight(1f))
+
+
+            Box(modifier = Modifier.weight(1f)
+            ){
+
+                Box(modifier = Modifier.align(Alignment.Center)
+                    .clip(RoundedCornerShape(CornerSize(15.dp)))
+                    .background(myBlue)
+                    .padding(3.dp)){
+
+                    Image(painter = painterResource(id = currentQuestion.flag),
+                        contentDescription = null,
+                        modifier = Modifier.clip(RoundedCornerShape(15.dp))
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
 
             Column(modifier = Modifier.weight(1f)) {
                 Row(modifier = Modifier.weight(1f)) {
                     Box(modifier = Modifier
                         .weight(1f)
-                        .clickable { viewModel.nextQuestion() }){
+                        .clickable {
+                            viewModel.nextQuestion()
+                            viewModel.startTime()
+                        }){
                         OptionItem(text = currentQuestion.name)
                     }
                     Spacer(modifier = Modifier.width(16.dp))
