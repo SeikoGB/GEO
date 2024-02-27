@@ -41,6 +41,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.R
 import uz.itschool.geo.localDatabase.entity.Level
+import uz.itschool.geo.model.LevelType
 import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
 import uz.itschool.geo.ui.theme.whiteBackround
@@ -55,7 +56,9 @@ fun LevelsScreen(navController: NavController,
     val levels = viewModel.currentLevels.observeAsState().value!!
     
 
-    Column(modifier = Modifier.fillMaxSize().background(whiteBackround),
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(whiteBackround),
         horizontalAlignment = Alignment.CenterHorizontally){
 
         TopBar("Sample text", viewModel.shared.getCoinNumber(), navController)
@@ -152,8 +155,12 @@ fun LevelItem(level: Level,
         .fillMaxWidth()
         .clip(RoundedCornerShape(30))
         .clickable {
-            navController.navigate(Screens.Test.passLevelAndCategoryType(level.levelType.text,
-                level.categoryName))
+            navController.navigate(
+                Screens.Test.passLevelAndCategoryType(
+                    level.levelType.text,
+                    level.categoryName
+                )
+            )
         }
         .background(myBlue)
         .padding(3.dp)

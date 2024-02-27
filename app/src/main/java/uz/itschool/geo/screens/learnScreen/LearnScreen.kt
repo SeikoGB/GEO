@@ -43,7 +43,6 @@ import uz.itschool.geo.ui.theme.whiteBackround
 fun LearnScreen(navController: NavController, viewModel: LearnViewModel) {
 
     val showDialogState = viewModel.showDialog.observeAsState().value
-
     val countries = viewModel.countryList.observeAsState().value!!
 
     if (showDialogState == true){
@@ -93,6 +92,7 @@ fun LearnCountryItem(country: Country, viewModel: LearnViewModel){
         Row (modifier = Modifier.fillMaxWidth()){
             Text(text = country.name,
                 fontSize = 25.sp,
+                color = Color.Black,
                 modifier = Modifier.weight(1f))
 
             Box(modifier = Modifier
@@ -103,6 +103,7 @@ fun LearnCountryItem(country: Country, viewModel: LearnViewModel){
 
             Text(text = country.capital,
                 fontSize = 25.sp,
+                color = Color.Black,
                 modifier = Modifier.weight(1f))
         }
     }
@@ -114,7 +115,7 @@ fun LearnDialog(country: Country){
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(20.dp)) {
 
-        Text(text = "Flag",
+        Text(text = country.name,
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold
         )
@@ -126,13 +127,10 @@ fun LearnDialog(country: Country){
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        Text(text = "Country: ${country.name}",
-            fontSize = 25.sp,
-        )
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Text(text = "Country: ${country.capital}",
+        Text(text = "Capital: ${country.capital}",
             fontSize = 25.sp,
         )
     }

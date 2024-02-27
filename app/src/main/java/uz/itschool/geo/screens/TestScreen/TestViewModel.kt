@@ -15,6 +15,8 @@ class TestViewModel(val levelName: String): ViewModel() {
     private var _countries = MutableLiveData(model.getCountryList())
     val countries: LiveData<MutableList<Country>> = _countries
 
+    private var tempAnswers = _countries.value!!
+
 //    private var _test_countries=MutableLiveData(countryList)
 //    val test_country_list:LiveData<MutableList<Country>> = _test_countries
 
@@ -27,16 +29,35 @@ class TestViewModel(val levelName: String): ViewModel() {
     private var _questionNumber = MutableLiveData(0)
     val questionNumber: LiveData<Int> = _questionNumber
 
-    var currentQuestion = countries.value!![questionNumber.value!!]
+    private var _currentQuestion = MutableLiveData(_countries.value!![_questionNumber.value!!])
+    var currentQuestion: LiveData<Country> = _currentQuestion
 
+    private var _answers = MutableLiveData(mutableListOf<Country>())
+    var answers: LiveData<MutableList<Country>> = _answers
 
     private val listSize = _countries.value!!.size
+
+
+
+
+    fun updateAnswers(){
+        _answers.value!!.removeAll(_answers.value!!)
+        tempAnswers.remove(_currentQuestion.value)
+        tempAnswers.shuffle()
+        _answers.value!!.add(_currentQuestion.value!!)
+        _answers.value!!.add(tempAnswers[0])
+        _answers.value!!.add(tempAnswers[1])
+        _answers.value!!.add(tempAnswers[2])
+        _answers.value!!.shuffle()
+
+        tempAnswers = _countries.value!!
+    }
 
 
     fun nextQuestion(){
         if (_questionNumber.value!! < listSize - 1){
             _questionNumber.value = _questionNumber.value!! + 1
-            currentQuestion =_countries.value!![_questionNumber.value!!]
+            _currentQuestion.value = _countries.value!![_questionNumber.value!!]
         }
 
     }
@@ -45,7 +66,7 @@ class TestViewModel(val levelName: String): ViewModel() {
 
     private fun randomiseList(){
         _countries.value!!.shuffle()
-        currentQuestion = countries.value!![questionNumber.value!!]
+        _currentQuestion.value = countries.value!![questionNumber.value!!]
     }
 
     fun startTime() {
@@ -65,6 +86,7 @@ class TestViewModel(val levelName: String): ViewModel() {
 
     init {
         randomiseList()
+        updateAnswers()
     }
 
 

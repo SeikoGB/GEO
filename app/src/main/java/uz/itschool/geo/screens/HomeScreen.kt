@@ -62,14 +62,12 @@ fun HomeScreen(navController: NavController){
             CategoryType.BY_CAPITAL))
     }
 
-
     Box(modifier = Modifier
         .fillMaxSize()
         .background(whiteBackround),
         contentAlignment = Alignment.TopStart){
 
         HomeTopBar()
-
 
         Column(modifier = Modifier
             .fillMaxWidth()
@@ -84,12 +82,12 @@ fun HomeScreen(navController: NavController){
 
             LazyVerticalGrid(columns = GridCells.Fixed(2),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)){
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.weight(1f)){
 
                 items(categories){category ->
                     CategoryItem(category = category,
                         navController = navController)
-
                 }
             }
 
@@ -100,17 +98,13 @@ fun HomeScreen(navController: NavController){
             Spacer(modifier = Modifier.height(20.dp))
 
             LearnButton(navController)
-        }
 
-        Box(modifier = Modifier
-            .align(Alignment.BottomCenter)
-            .fillMaxWidth()
-            .padding(16.dp)){
+            Spacer(modifier = Modifier.height(20.dp))
+
             HomeBottomBar()
         }
     }
 }
-
 
 @Composable
 fun CategoryItem(category: CategoryType, navController: NavController){
@@ -142,7 +136,6 @@ fun CategoryItem(category: CategoryType, navController: NavController){
     }
 }
 
-
 @Composable
 fun HomeTopBar(){
     Box(modifier = Modifier
@@ -157,7 +150,6 @@ fun HomeTopBar(){
         .background(myBlue)
     )
 }
-
 
 @Composable
 fun Competition(){
@@ -190,15 +182,15 @@ fun LearnButton(navController: NavController){
     Box(modifier = Modifier
         .fillMaxWidth()
         .clip(RoundedCornerShape(corner = CornerSize(20.dp)))
-        .background(Color.White)
-        .padding(5.dp)
         .clickable {
             navController.navigate(Screens.Learn.route)
-        },
+        }
+        .background(Color.White)
+        .padding(5.dp)
     ){
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(painter = painterResource(id = R.drawable.trophy),
+            Image(painter = painterResource(id = R.drawable.learn_icon),
                 contentDescription = null,
                 modifier = Modifier.size(50.dp))
 
