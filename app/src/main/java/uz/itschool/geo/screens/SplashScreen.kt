@@ -141,56 +141,62 @@ fun addCountriesToDB(countryDao: CountryDao){
         name = "Spain",
         capital = "Madrid",
         levelType = LevelType.STUDENT.text,
-        flag = R.drawable.fr))
+        flag = R.drawable.es))
 
     countryDao.addCountry(Country(
         name = "Switzerland",
         capital = "Bern",
         levelType = LevelType.STUDENT.text,
-        flag = R.drawable.au))
+        flag = R.drawable.ch))
 
     countryDao.addCountry(Country(
         name = "Turkey",
         capital = "Ankara",
         levelType = LevelType.STUDENT.text,
-        flag = R.drawable.bt))
+        flag = R.drawable.tr))
 
     countryDao.addCountry(Country(
         name = "United Kingdom",
         capital = "London",
         levelType = LevelType.STUDENT.text,
-        flag = R.drawable.au))
+        flag = R.drawable.gb))
 
     countryDao.addCountry(Country(
         name = "United States",
         capital = "Washington,D.C.",
         levelType = LevelType.STUDENT.text,
-        flag = R.drawable.au))
+        flag = R.drawable.us))
+
     countryDao.addCountry(Country(
         name = "Algeria",
         capital = "Algiers",
         levelType = LevelType.TOURIST.text,
         flag = R.drawable.dz))
+
     countryDao.addCountry(Country(
         name = "Azerbaijan",
         capital = "Baku",
         levelType = LevelType.TOURIST.text,
         flag = R.drawable.az))
+
     countryDao.addCountry(Country(
         name = "Belgium",
         capital = "Brussels",
         levelType = LevelType.TOURIST.text,
         flag = R.drawable.be))
+
     countryDao.addCountry(Country(
         name = "Colombia",
         capital = "Bogota",
         levelType = LevelType.TOURIST.text,
         flag = R.drawable.co))
+
     countryDao.addCountry(Country(
         name = "Cuba",
         capital = "Havana",
         levelType = LevelType.TOURIST.text,
         flag = R.drawable.cu))
+
     countryDao.addCountry(Country(
         name = "Czechia",
         capital = "Prague",

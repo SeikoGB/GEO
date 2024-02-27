@@ -21,7 +21,7 @@ import uz.itschool.geo.screens.TestScreen.TestViewModel
 import uz.itschool.geo.screens.learnScreen.LearnViewModel
 import uz.itschool.geo.screens.levelScreen.LevelViewModel
 
-lateinit var viewModel: TestViewModel
+lateinit var testViewModel: TestViewModel
 
 @Composable
 fun NavGraph(navController: NavHostController){
@@ -68,8 +68,8 @@ fun NavGraph(navController: NavHostController){
                 }
 
                 if (!viewModelCreated){
-                    viewModel = TestViewModel(levelName.drop(1).dropLast(1))
-                    viewModel.startTime()
+                    testViewModel = TestViewModel(levelName.drop(1).dropLast(1))
+                    testViewModel.startTime()
                     viewModelCreated = true
                 }
                 //Log.d("TAggG", "NavGraph: ${viewModel.countries.value!!}")
@@ -78,15 +78,13 @@ fun NavGraph(navController: NavHostController){
                     "{${CategoryType.BY_FLAG.text}}" ->{
                         TestScreen(
                             navController = navController,
-                            viewModel = viewModel)
+                            viewModel = testViewModel)
                     }
                     "{${CategoryType.BY_CAPITAL.text}}" ->{
                         CapitalCityTestScreen()
                     }
                 }
-
             }
-
         }
         
         composable(route = Screens.Learn.route){

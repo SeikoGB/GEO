@@ -1,7 +1,6 @@
 package uz.itschool.geo.screens.levelScreen
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -34,7 +33,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,10 +40,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.R
-import uz.itschool.geo.localDatabase.AppDataBase
 import uz.itschool.geo.localDatabase.entity.Level
 import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
+import uz.itschool.geo.ui.theme.whiteBackround
 
 
 @SuppressLint("MutableCollectionMutableState")
@@ -57,7 +55,7 @@ fun LevelsScreen(navController: NavController,
     val levels = viewModel.currentLevels.observeAsState().value!!
     
 
-    Column(modifier = Modifier.fillMaxSize(),
+    Column(modifier = Modifier.fillMaxSize().background(whiteBackround),
         horizontalAlignment = Alignment.CenterHorizontally){
 
         TopBar("Sample text", viewModel.shared.getCoinNumber(), navController)
