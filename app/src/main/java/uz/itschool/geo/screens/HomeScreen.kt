@@ -107,7 +107,8 @@ fun HomeScreen(navController: NavController){
 }
 
 @Composable
-fun CategoryItem(category: CategoryType, navController: NavController){
+fun CategoryItem(category: CategoryType,
+                 navController: NavController){
 
     Box(modifier = Modifier
         .fillMaxWidth()

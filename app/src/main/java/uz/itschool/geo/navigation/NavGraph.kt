@@ -69,7 +69,7 @@ fun NavGraph(navController: NavHostController){
 
                 if (!viewModelCreated){
                     testViewModel = TestViewModel(levelName.drop(1).dropLast(1))
-                    testViewModel.startTime()
+                    testViewModel.startTimer()
                     viewModelCreated = true
                 }
                 //Log.d("TAggG", "NavGraph: ${viewModel.countries.value!!}")
