@@ -310,7 +310,10 @@ fun createLevels(levelDao: LevelDao){
         LevelType.TOURIST,
         LevelType.DRIVER,
         LevelType.CAPTAIN,
-        LevelType.TEACHER)
+        LevelType.TEACHER,
+        LevelType.SCIENTIST,
+        LevelType.VIRGIN_OPENER
+    )
 
     for (c in categories){
         for (l in levelTypes){
