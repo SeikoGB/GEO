@@ -9,7 +9,7 @@ import uz.itschool.geo.model.LevelType
 data class Level(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val levelType: LevelType,
+    val levelName: String,
     val categoryName: String,
     val maxQuestion: Int = 20,
     val score: Int = 0,

@@ -163,7 +163,7 @@ fun addCountriesToDB(countryDao: CountryDao){
 
     countryDao.addCountry(Country(
         name = "United States",
-        capital = "Washington,D.C.",
+        capital = "Washington, D.C.",
         levelType = LevelType.STUDENT.text,
         flag = R.drawable.us))
 
@@ -301,14 +301,22 @@ fun addCountriesToDB(countryDao: CountryDao){
 
 fun createLevels(levelDao: LevelDao){
 
-    val categories = mutableListOf(CategoryType.BY_FLAG, CategoryType.BY_CAPITAL)
-    val levelTypes = mutableListOf(LevelType.STUDENT, LevelType.TOURIST)
+    val categories = mutableListOf(
+        CategoryType.COUNTRY_BY_FLAG,
+        CategoryType.COUNTRY_BY_CAPITAL)
+
+    val levelTypes = mutableListOf(
+        LevelType.STUDENT,
+        LevelType.TOURIST,
+        LevelType.DRIVER,
+        LevelType.CAPTAIN,
+        LevelType.TEACHER)
 
     for (c in categories){
         for (l in levelTypes){
             levelDao.addLevel(Level(
                 categoryName = c.text,
-                levelType = l,))
+                levelName = l.text,))
         }
     }
 }

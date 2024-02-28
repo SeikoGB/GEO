@@ -58,8 +58,8 @@ import uz.itschool.geo.ui.theme.whiteBackround
 fun HomeScreen(navController: NavController){
 
     val categories by remember {
-        mutableStateOf(mutableListOf(CategoryType.BY_FLAG,
-            CategoryType.BY_CAPITAL))
+        mutableStateOf(mutableListOf(CategoryType.COUNTRY_BY_FLAG,
+            CategoryType.COUNTRY_BY_CAPITAL))
     }
 
     Box(modifier = Modifier

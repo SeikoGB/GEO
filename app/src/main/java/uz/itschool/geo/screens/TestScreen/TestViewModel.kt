@@ -8,7 +8,6 @@ import uz.itschool.geo.localDatabase.entity.Country
 
 class TestViewModel(val levelName: String): ViewModel() {
     private val model = TestModel(levelName)
-    val time = "20"
     private var timer: CountDownTimer? = null
 
     private var _countries = MutableLiveData(model.getCountryList())
@@ -19,7 +18,7 @@ class TestViewModel(val levelName: String): ViewModel() {
     private var _isTimeFinished = MutableLiveData(false)
     val isTimeFinished: LiveData<Boolean> = _isTimeFinished
 
-    private var _timeProgress = MutableLiveData(time)
+    private var _timeProgress = MutableLiveData("20")
     val timeProgress: LiveData<String> = _timeProgress
 
     private var _questionNumber = MutableLiveData(0)
@@ -31,7 +30,22 @@ class TestViewModel(val levelName: String): ViewModel() {
     private var _answers = MutableLiveData(mutableListOf<Country>())
     var answers: LiveData<MutableList<Country>> = _answers
 
+    private var _score = MutableLiveData(0)
+    var score: LiveData<Int> = _score
+
     private val listSize = _countries.value!!.size
+
+
+
+    fun checkQuestion(country: Country){
+        if (country == _currentQuestion.value){
+            _score.value = _score.value!! + 1
+        }else{
+            if (_score.value != 0){
+                _score.value = _score.value!! - 1
+            }
+        }
+    }
 
     fun updateAnswers(){
         _answers.value!!.removeAll(_answers.value!!)
@@ -66,12 +80,17 @@ class TestViewModel(val levelName: String): ViewModel() {
             }
             override fun onFinish() {
                 _isTimeFinished.value = true
+                finishGame()
             }
         }.start()
     }
 
     fun stopTimer(){
         timer?.cancel()
+    }
+
+    fun finishGame(){
+
     }
 
     init {

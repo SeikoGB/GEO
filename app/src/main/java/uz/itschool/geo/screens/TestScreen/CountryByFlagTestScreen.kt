@@ -7,11 +7,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -37,11 +39,11 @@ import uz.itschool.geo.ui.theme.whiteBackround
 fun TestScreen(navController: NavController,
                viewModel: TestViewModel){
 
-    val countries = viewModel.countries.observeAsState().value!!
     val timeProgress = viewModel.timeProgress.observeAsState().value!!
     //val questionNumber = viewModel.questionNumber.observeAsState().value!!
     val currentQuestion = viewModel.currentQuestion.observeAsState().value!!
     val answers = viewModel.answers.observeAsState().value!!
+    val score = viewModel.score.observeAsState().value!!
 
     Log.d("answer", "TestScreen: $answers")
 
@@ -78,50 +80,48 @@ fun TestScreen(navController: NavController,
             Spacer(modifier = Modifier.height(20.dp))
 
 
-//            Column(modifier = Modifier.weight(1f)) {
-//                Row(modifier = Modifier.weight(1f)) {
-//                    Box(modifier = Modifier
-//                        .weight(1f)
-//                        .clickable {
-//                            viewModel.nextQuestion()
-//                            viewModel.startTime()
-//                        }){
-//                        OptionItem(text = answers[0].name)
-//                    }
-//                    Spacer(modifier = Modifier.width(16.dp))
-//
-//                    Box(modifier = Modifier.weight(1f)){
-//                        OptionItem(text = answers[1].name)
-//                    }
-//
-//                }
-//
-//                Spacer(modifier = Modifier.height(16.dp))
-//
-//                Row(modifier = Modifier.weight(1f)) {
-//                    Box(modifier = Modifier.weight(1f)){
-//                        OptionItem(text = answers[2].name)
-//                    }
-//                    Spacer(modifier = Modifier.width(16.dp))
-//
-//                    Box(modifier = Modifier.weight(1f)){
-//                        OptionItem(text = answers[3].name)
-//                    }
-//                }
-//            }
+            Column(modifier = Modifier.weight(1f)) {
+                Row(modifier = Modifier.weight(1f)) {
+                    Box(modifier = Modifier
+                        .weight(1f)
+                        .clickable {
+                            viewModel.nextQuestion()
+                        }){
+                        OptionItem(text = answers[0].name, viewModel)
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
 
-
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                verticalArrangement = Arrangement.SpaceEvenly,
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.weight(1f)){
-
-                items(answers){answer ->
-                    OptionItem(text = answer.name, viewModel = viewModel)
+                    Box(modifier = Modifier.weight(1f)){
+                        OptionItem(text = answers[1].name, viewModel)
+                    }
                 }
 
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(modifier = Modifier.weight(1f)) {
+                    Box(modifier = Modifier.weight(1f)){
+                        OptionItem(text = answers[2].name, viewModel)
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Box(modifier = Modifier.weight(1f)){
+                        OptionItem(text = answers[3].name, viewModel)
+                    }
+                }
             }
+
+
+//            LazyVerticalGrid(
+//                columns = GridCells.Fixed(2),
+//                verticalArrangement = Arrangement.SpaceEvenly,
+//                horizontalArrangement = Arrangement.spacedBy(16.dp),
+//                modifier = Modifier.weight(1f)){
+//
+//                items(answers){answer ->
+//                    OptionItem(text = answer.name, viewModel = viewModel)
+//                }
+//
+//            }
         }
     }
 }
@@ -132,7 +132,8 @@ fun OptionItem(text: String, viewModel: TestViewModel){
     Box(modifier = Modifier
         .fillMaxSize()
         .clip(RoundedCornerShape(15.dp))
-        .background(myBlue).clickable {
+        .background(myBlue)
+        .clickable {
             optionItemClicked(viewModel)
         }
         .padding(3.dp)

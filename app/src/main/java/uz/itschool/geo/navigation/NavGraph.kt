@@ -75,12 +75,12 @@ fun NavGraph(navController: NavHostController){
                 //Log.d("TAggG", "NavGraph: ${viewModel.countries.value!!}")
 
                 when(categoryName){
-                    "{${CategoryType.BY_FLAG.text}}" ->{
+                    "{${CategoryType.COUNTRY_BY_FLAG.text}}" ->{
                         TestScreen(
                             navController = navController,
                             viewModel = testViewModel)
                     }
-                    "{${CategoryType.BY_CAPITAL.text}}" ->{
+                    "{${CategoryType.COUNTRY_BY_CAPITAL.text}}" ->{
                         CapitalCityTestScreen()
                     }
                 }

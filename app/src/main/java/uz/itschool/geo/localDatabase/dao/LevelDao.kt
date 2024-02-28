@@ -3,6 +3,7 @@ package uz.itschool.geo.localDatabase.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import uz.itschool.geo.localDatabase.entity.Level
 import uz.itschool.geo.model.CategoryType
 
@@ -18,4 +19,7 @@ interface LevelDao {
 
     @Query("SELECT * FROM levels")
     fun getAllLevels(): MutableList<Level>
+
+    @Update
+    fun editLevel(level: Level)
 }

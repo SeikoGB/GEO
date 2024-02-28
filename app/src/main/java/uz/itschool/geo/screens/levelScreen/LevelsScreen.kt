@@ -157,7 +157,7 @@ fun LevelItem(level: Level,
         .clickable {
             navController.navigate(
                 Screens.Test.passLevelAndCategoryType(
-                    level.levelType.text,
+                    level.levelName,
                     level.categoryName
                 )
             )
@@ -174,7 +174,7 @@ fun LevelItem(level: Level,
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Text(text = "${level.levelType}",
+            Text(text = "${level.levelName}",
                 fontSize = 20.sp)
 
             Spacer(modifier = Modifier.height(10.dp))
