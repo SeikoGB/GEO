@@ -83,10 +83,7 @@ fun TestScreen(navController: NavController,
             Column(modifier = Modifier.weight(1f)) {
                 Row(modifier = Modifier.weight(1f)) {
                     Box(modifier = Modifier
-                        .weight(1f)
-                        .clickable {
-                            viewModel.nextQuestion()
-                        }){
+                        .weight(1f)){
                         OptionItem(text = answers[0].name, viewModel)
                     }
                     Spacer(modifier = Modifier.width(16.dp))

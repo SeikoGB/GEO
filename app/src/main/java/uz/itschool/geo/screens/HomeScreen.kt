@@ -14,9 +14,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -42,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.R
+import uz.itschool.geo.model.CategoryHolder
 import uz.itschool.geo.model.CategoryType
 import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
@@ -58,8 +63,8 @@ import uz.itschool.geo.ui.theme.whiteBackround
 fun HomeScreen(navController: NavController){
 
     val categories by remember {
-        mutableStateOf(mutableListOf(CategoryType.COUNTRY_BY_FLAG,
-            CategoryType.COUNTRY_BY_CAPITAL))
+        mutableStateOf(mutableListOf(CategoryHolder.COUNTRY,
+            CategoryHolder.CAPITAL))
     }
 
     Box(modifier = Modifier
@@ -70,38 +75,58 @@ fun HomeScreen(navController: NavController){
         HomeTopBar()
 
         Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally) {
 
-            Text(text = "Country",
-                fontSize = 30.sp,
-                color = Color.White)
-
             Spacer(modifier = Modifier.height(16.dp))
+//
+//            LazyVerticalGrid(columns = GridCells.Fixed(2),
+//                verticalArrangement = Arrangement.spacedBy(16.dp),
+//                horizontalArrangement = Arrangement.spacedBy(16.dp),
+//                modifier = Modifier.weight(1f)){
+//
+//                items(categories){category ->
+//                    CategoryItem(category = category,
+//                        navController = navController)
+//                }
+//            }
 
-            LazyVerticalGrid(columns = GridCells.Fixed(2),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.weight(1f)){
 
-                items(categories){category ->
-                    CategoryItem(category = category,
-                        navController = navController)
+            LazyColumn(modifier = Modifier
+                .weight(1f)
+                .padding(start = 16.dp)){
+                items(categories){categoryHolder->
+                    Text(text = categoryHolder.text,
+                        fontSize = 30.sp,
+                        color = Color.White,)
+
+                    LazyRow(modifier = Modifier.fillMaxWidth(),){
+                        items(categoryHolder.categories){category->
+                            CategoryItem(category = category,
+                                navController = navController)
+
+                            Spacer(modifier = Modifier.width(16.dp))
+                        }
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Competition()
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)){
 
-            Spacer(modifier = Modifier.height(20.dp))
+                Competition()
 
-            LearnButton(navController)
+                Spacer(modifier = Modifier.height(20.dp))
 
-            Spacer(modifier = Modifier.height(20.dp))
+                LearnButton(navController)
 
-            HomeBottomBar()
+                Spacer(modifier = Modifier.height(20.dp))
+
+                HomeBottomBar()
+            }
         }
     }
 }
