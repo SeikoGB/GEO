@@ -21,7 +21,11 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,19 +36,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import uz.itschool.geo.localDatabase.entity.Country
 import uz.itschool.geo.ui.theme.myBlue
+import uz.itschool.geo.ui.theme.myGreen
+import uz.itschool.geo.ui.theme.myRed
 import uz.itschool.geo.ui.theme.whiteBackround
 
 @Composable
 fun TestScreen(navController: NavController,
                viewModel: TestViewModel){
 
-    val timeProgress = viewModel.timeProgress.observeAsState().value!!
+    var timeProgress = viewModel.timeProgress.observeAsState().value!!
     //val questionNumber = viewModel.questionNumber.observeAsState().value!!
     val currentQuestion = viewModel.currentQuestion.observeAsState().value!!
     val answers = viewModel.answers.observeAsState().value!!
     val score = viewModel.score.observeAsState().value!!
+    val isTimeFinished = viewModel.isTimeFinished.observeAsState().value!!
 
+    if (isTimeFinished){
+        timeProgress = "finish"
+    }
     Log.d("answer", "TestScreen: $answers")
 
     Column(modifier = Modifier
@@ -54,12 +65,10 @@ fun TestScreen(navController: NavController,
 
         TestTopBar(time = timeProgress)
 
-
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
-
 
             Box(modifier = Modifier.weight(1f)
             ){
@@ -79,34 +88,31 @@ fun TestScreen(navController: NavController,
 
             Spacer(modifier = Modifier.height(20.dp))
 
-
             Column(modifier = Modifier.weight(1f)) {
                 Row(modifier = Modifier.weight(1f)) {
                     Box(modifier = Modifier
                         .weight(1f)){
-                        OptionItem(text = answers[0].name, viewModel)
+                        OptionItem(country = answers[0], viewModel)
                     }
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Box(modifier = Modifier.weight(1f)){
-                        OptionItem(text = answers[1].name, viewModel)
+                        OptionItem(country = answers[1], viewModel)
                     }
                 }
-
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Row(modifier = Modifier.weight(1f)) {
                     Box(modifier = Modifier.weight(1f)){
-                        OptionItem(text = answers[2].name, viewModel)
+                        OptionItem(country = answers[2], viewModel)
                     }
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Box(modifier = Modifier.weight(1f)){
-                        OptionItem(text = answers[3].name, viewModel)
+                        OptionItem(country = answers[3], viewModel)
                     }
                 }
             }
-
 
 //            LazyVerticalGrid(
 //                columns = GridCells.Fixed(2),
@@ -124,32 +130,47 @@ fun TestScreen(navController: NavController,
 }
 
 @Composable
-fun OptionItem(text: String, viewModel: TestViewModel){
+fun OptionItem(country: Country, viewModel: TestViewModel){
+
+    var cardBG by remember {
+        mutableStateOf(Color.White)
+    }
+    var textColor by remember {
+        mutableStateOf(Color.Black)
+    }
+    var cardEnabled by remember {
+        mutableStateOf(true)
+    }
 
     Box(modifier = Modifier
         .fillMaxSize()
         .clip(RoundedCornerShape(15.dp))
         .background(myBlue)
-        .clickable {
-            optionItemClicked(viewModel)
+        .clickable(cardEnabled) {
+
+//            if (viewModel.checkQuestion(country)){
+//                cardBG = Color.White
+//                textColor = Color.White
+//                cardEnabled = true
+//            }else{
+//                cardBG = myRed
+//                textColor = Color.White
+//                cardEnabled = false
+//            }
+
+
+            viewModel.checkQuestion(country)
         }
         .padding(3.dp)
         .clip(RoundedCornerShape(15.dp))
-        .background(Color.White)
+        .background(cardBG)
         .padding(10.dp),
         contentAlignment = Alignment.Center){
         Text(
-            text = text,
-            color = Color.Black,
+            text = country.name,
+            color = textColor,
             fontSize = 20.sp)
     }
-}
-
-fun optionItemClicked(viewModel: TestViewModel){
-    viewModel.stopTimer()
-    viewModel.startTimer()
-    viewModel.nextQuestion()
-    viewModel.updateAnswers()
 }
 
 @Composable

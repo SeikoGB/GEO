@@ -13,7 +13,7 @@ class TestViewModel(val levelName: String): ViewModel() {
     private var _countries = MutableLiveData(model.getCountryList())
     val countries: LiveData<MutableList<Country>> = _countries
 
-    private var tempAnswers = _countries.value!!
+    private var tempAnswers = model.getCountryList()
 
     private var _isTimeFinished = MutableLiveData(false)
     val isTimeFinished: LiveData<Boolean> = _isTimeFinished
@@ -37,13 +37,20 @@ class TestViewModel(val levelName: String): ViewModel() {
 
 
 
-    fun checkQuestion(country: Country){
-        if (country == _currentQuestion.value){
+    fun checkQuestion(country: Country):Boolean{
+        return if (country == _currentQuestion.value){
             _score.value = _score.value!! + 1
+            stopTimer()
+            nextQuestion()
+            updateAnswers()
+            startTimer()
+            true
         }else{
-            if (_score.value != 0){
-                _score.value = _score.value!! - 1
-            }
+//            if (_score.value != 0){
+//                _score.value = _score.value!! - 1
+//            }
+
+            false
         }
     }
 
@@ -57,7 +64,7 @@ class TestViewModel(val levelName: String): ViewModel() {
         _answers.value!!.add(tempAnswers[2])
         _answers.value!!.shuffle()
 
-        tempAnswers = _countries.value!!
+        tempAnswers = model.getCountryList()
     }
 
     fun nextQuestion(){
