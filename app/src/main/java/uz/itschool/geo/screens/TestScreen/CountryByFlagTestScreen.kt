@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.localDatabase.entity.Country
+import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
 import uz.itschool.geo.ui.theme.myGreen
 import uz.itschool.geo.ui.theme.myRed
@@ -46,16 +47,18 @@ import uz.itschool.geo.ui.theme.whiteBackround
 fun TestScreen(navController: NavController,
                viewModel: TestViewModel){
 
-    var timeProgress = viewModel.timeProgress.observeAsState().value!!
     //val questionNumber = viewModel.questionNumber.observeAsState().value!!
     val currentQuestion = viewModel.currentQuestion.observeAsState().value!!
     val answers = viewModel.answers.observeAsState().value!!
     val score = viewModel.score.observeAsState().value!!
-    val isTimeFinished = viewModel.isTimeFinished.observeAsState().value!!
+    val isGameFinished = viewModel.isGameFinished.observeAsState().value!!
 
-    if (isTimeFinished){
-        timeProgress = "finish"
+    if (isGameFinished){
+        //timeProgress = "finish"
+        navController.navigate(Screens.Result.route)
     }
+
+
     Log.d("answer", "TestScreen: $answers")
 
     Column(modifier = Modifier
@@ -63,7 +66,7 @@ fun TestScreen(navController: NavController,
         .background(whiteBackround),
         horizontalAlignment = Alignment.CenterHorizontally){
 
-        TestTopBar(time = timeProgress)
+        TestTopBar(viewModel)
 
         Column(modifier = Modifier
             .fillMaxSize()
@@ -149,7 +152,7 @@ fun OptionItem(country: Country, viewModel: TestViewModel){
         .clickable(cardEnabled) {
 
 //            if (viewModel.checkQuestion(country)){
-//                cardBG = Color.White
+//                cardBG = myGreen
 //                textColor = Color.White
 //                cardEnabled = true
 //            }else{
@@ -174,16 +177,26 @@ fun OptionItem(country: Country, viewModel: TestViewModel){
 }
 
 @Composable
-fun TestTopBar(time: String){
-    Box(modifier = Modifier.fillMaxWidth()){
-        Text(text = time)
+private fun TestTopBar(viewModel: TestViewModel){
+    val timeProgress = viewModel.timeProgress.observeAsState().value!!
+    val lives = viewModel.lives.observeAsState().value!!
+
+    Row(modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly){
+
+        Text(text = "Lives: $lives")
+
+        Text(text = viewModel.levelName)
+
+
+        Text(text = timeProgress)
     }
 }
 
 
 @Preview(showBackground = true)
 @Composable
-fun testtest(){
+private fun testtest(){
     val navController = rememberNavController()
     val viewModel = TestViewModel("levelName")
     TestScreen(navController, viewModel)

@@ -15,8 +15,8 @@ class TestViewModel(val levelName: String): ViewModel() {
 
     private var tempAnswers = model.getCountryList()
 
-    private var _isTimeFinished = MutableLiveData(false)
-    val isTimeFinished: LiveData<Boolean> = _isTimeFinished
+    private var _isGameFinished = MutableLiveData(false)
+    val isGameFinished: LiveData<Boolean> = _isGameFinished
 
     private var _timeProgress = MutableLiveData("20")
     val timeProgress: LiveData<String> = _timeProgress
@@ -25,13 +25,16 @@ class TestViewModel(val levelName: String): ViewModel() {
     val questionNumber: LiveData<Int> = _questionNumber
 
     private var _currentQuestion = MutableLiveData(_countries.value!![_questionNumber.value!!])
-    var currentQuestion: LiveData<Country> = _currentQuestion
+    val currentQuestion: LiveData<Country> = _currentQuestion
 
     private var _answers = MutableLiveData(mutableListOf<Country>())
     var answers: LiveData<MutableList<Country>> = _answers
 
     private var _score = MutableLiveData(0)
     var score: LiveData<Int> = _score
+
+    private var _lives = MutableLiveData(3)
+    val lives: LiveData<Int> = _lives
 
     private val listSize = _countries.value!!.size
 
@@ -46,10 +49,10 @@ class TestViewModel(val levelName: String): ViewModel() {
             startTimer()
             true
         }else{
-//            if (_score.value != 0){
-//                _score.value = _score.value!! - 1
-//            }
-
+            _lives.value = _lives.value!! -1
+            if (_lives.value == 0){
+                _isGameFinished.value = true
+            }
             false
         }
     }
@@ -76,7 +79,7 @@ class TestViewModel(val levelName: String): ViewModel() {
 
     private fun randomiseList(){
         _countries.value!!.shuffle()
-        _currentQuestion.value = countries.value!![questionNumber.value!!]
+        _currentQuestion.value = countries.value!![_questionNumber.value!!]
     }
 
     fun startTimer() {
@@ -86,7 +89,7 @@ class TestViewModel(val levelName: String): ViewModel() {
                 _timeProgress.value = seconds.toString()
             }
             override fun onFinish() {
-                _isTimeFinished.value = true
+                _isGameFinished.value = true
                 finishGame()
             }
         }.start()

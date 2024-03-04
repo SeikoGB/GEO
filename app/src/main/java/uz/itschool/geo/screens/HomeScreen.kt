@@ -111,7 +111,7 @@ fun HomeScreen(navController: NavController){
                 }
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            //Spacer(modifier = Modifier.height(10.dp))
 
             Column(modifier = Modifier
                 .fillMaxWidth()
