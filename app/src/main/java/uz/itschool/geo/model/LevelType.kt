@@ -17,7 +17,8 @@ val allLevels = mutableListOf(
     LevelType.DRIVER,
     LevelType.CAPTAIN,
     LevelType.TEACHER,
-    LevelType.SCIENTIST
+    LevelType.SCIENTIST,
+    LevelType.VIRGIN_OPENER
 )
 
 fun getLevelTypeByText(text: String):LevelType{

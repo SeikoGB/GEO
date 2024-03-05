@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -47,15 +48,13 @@ import uz.itschool.geo.ui.theme.whiteBackround
 fun TestScreen(navController: NavController,
                viewModel: TestViewModel){
 
-    //val questionNumber = viewModel.questionNumber.observeAsState().value!!
     val currentQuestion = viewModel.currentQuestion.observeAsState().value!!
     val answers = viewModel.answers.observeAsState().value!!
-    val score = viewModel.score.observeAsState().value!!
+    //val score = viewModel.score.observeAsState().value!!
     val isGameFinished = viewModel.isGameFinished.observeAsState().value!!
 
     if (isGameFinished){
-        //timeProgress = "finish"
-        navController.navigate(Screens.Result.route)
+        viewModel.finishGame(navController)
     }
 
 
@@ -181,15 +180,21 @@ private fun TestTopBar(viewModel: TestViewModel){
     val timeProgress = viewModel.timeProgress.observeAsState().value!!
     val lives = viewModel.lives.observeAsState().value!!
 
-    Row(modifier = Modifier.fillMaxWidth(),
+    Row(modifier = Modifier.fillMaxWidth().background(myBlue),
         horizontalArrangement = Arrangement.SpaceEvenly){
 
         Text(text = "Lives: $lives")
 
         Text(text = viewModel.levelName)
 
-
-        Text(text = timeProgress)
+        Box(modifier = Modifier
+            //.fillMaxHeight(),
+            ,
+            contentAlignment = Alignment.Center){
+            Text(text = timeProgress,
+                color = Color.White,
+                fontSize = 25.sp)
+        }
     }
 }
 

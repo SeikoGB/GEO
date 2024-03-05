@@ -12,5 +12,6 @@ data class Level(
     val levelName: String,
     val categoryName: String,
     val maxQuestion: Int = 20,
-    val score: Int = 0,
+    var score: Int = 0,
+    var isOpened: Boolean = false
 )

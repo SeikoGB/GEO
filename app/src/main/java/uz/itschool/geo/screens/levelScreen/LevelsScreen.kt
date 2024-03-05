@@ -151,10 +151,15 @@ fun LevelItem(level: Level,
         mutableStateOf((progress*100).toInt())
     }
 
+    var isClickable by remember {
+        mutableStateOf(level.isOpened)
+    }
+
+
     Box(modifier = Modifier
         .fillMaxWidth()
         .clip(RoundedCornerShape(30))
-        .clickable {
+        .clickable(isClickable) {
             navController.navigate(
                 Screens.Test.passLevelAndCategoryType(
                     level.levelName,
@@ -174,7 +179,7 @@ fun LevelItem(level: Level,
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Text(text = "${level.levelName}",
+            Text(text = level.levelName,
                 fontSize = 20.sp)
 
             Spacer(modifier = Modifier.height(10.dp))

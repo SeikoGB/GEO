@@ -4,11 +4,15 @@ import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import uz.itschool.geo.localDatabase.entity.Country
+import uz.itschool.geo.navigation.Screens
 
 class TestViewModel(val levelName: String): ViewModel() {
     private val model = TestModel(levelName)
     private var timer: CountDownTimer? = null
+
+    var thisLevel = model.getLevel()
 
     private var _countries = MutableLiveData(model.getCountryList())
     val countries: LiveData<MutableList<Country>> = _countries
@@ -95,7 +99,6 @@ class TestViewModel(val levelName: String): ViewModel() {
             override fun onFinish() {
                 _isGameFinished.value = true
                 _isWon.value = false
-                finishGame()
             }
         }.start()
     }
@@ -104,8 +107,15 @@ class TestViewModel(val levelName: String): ViewModel() {
         timer?.cancel()
     }
 
-    fun finishGame(){
+    fun updateLevel(){
+        thisLevel.score = _score.value!!
+        model.updateLevel(thisLevel)
 
+    }
+
+    fun finishGame(navController: NavController){
+        updateLevel()
+        navController.navigate(Screens.Result.route)
     }
 
     init {

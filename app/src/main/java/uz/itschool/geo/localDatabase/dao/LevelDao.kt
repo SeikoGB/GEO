@@ -17,6 +17,9 @@ interface LevelDao {
     @Query("SELECT * FROM levels WHERE categoryName = :categoryName")
     fun getLevelByCategory(categoryName: String): MutableList<Level>
 
+    @Query("SELECT * FROM levels WHERE levelName = :levelName")
+    fun getLevelByName(levelName: String):Level
+
     @Query("SELECT * FROM levels")
     fun getAllLevels(): MutableList<Level>
 

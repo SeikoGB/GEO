@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -81,15 +80,17 @@ fun LearnCountryItem(country: Country, viewModel: LearnViewModel){
 
     Box (modifier = Modifier
         .fillMaxWidth()
-        .clip(RoundedCornerShape(20.dp))
-        .background(Color.White)
-        .padding(10.dp)
+        .clip(RoundedCornerShape(10.dp))
         .clickable {
             viewModel.onOpenDialogClicked()
             viewModel.setChosenCountry(country)
-        }){
+        }
+        .background(Color.White)
+        .padding(10.dp)
+        ){
 
-        Row (modifier = Modifier.fillMaxWidth()){
+        Row (modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically){
             Text(text = country.name,
                 fontSize = 25.sp,
                 color = Color.Black,

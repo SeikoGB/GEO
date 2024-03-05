@@ -21,6 +21,7 @@ import uz.itschool.geo.localDatabase.entity.Country
 import uz.itschool.geo.localDatabase.entity.Level
 import uz.itschool.geo.model.CategoryType
 import uz.itschool.geo.model.LevelType
+import uz.itschool.geo.model.allLevels
 import uz.itschool.geo.navigation.Screens
 
 @Composable
@@ -305,21 +306,18 @@ fun createLevels(levelDao: LevelDao){
         CategoryType.COUNTRY_BY_FLAG,
         CategoryType.COUNTRY_BY_CAPITAL)
 
-    val levelTypes = mutableListOf(
-        LevelType.STUDENT,
-        LevelType.TOURIST,
-        LevelType.DRIVER,
-        LevelType.CAPTAIN,
-        LevelType.TEACHER,
-        LevelType.SCIENTIST,
-        LevelType.VIRGIN_OPENER
-    )
+    val levelTypes = allLevels
 
     for (c in categories){
         for (l in levelTypes){
+            var isOpened = false
+            if (l.text == LevelType.STUDENT.text){
+                isOpened = true
+            }
             levelDao.addLevel(Level(
                 categoryName = c.text,
-                levelName = l.text,))
+                levelName = l.text,
+                isOpened = isOpened))
         }
     }
 }
