@@ -11,3 +11,21 @@ enum class LevelType(val text:String, val image:Int) {
     SCIENTIST("Scientist",R.drawable.chemistry),
     VIRGIN_OPENER("Land Opener",R.drawable.virgin_opener)
 }
+val allLevels = mutableListOf(
+    LevelType.STUDENT,
+    LevelType.TOURIST,
+    LevelType.DRIVER,
+    LevelType.CAPTAIN,
+    LevelType.TEACHER,
+    LevelType.SCIENTIST
+)
+
+fun getLevelTypeByText(text: String):LevelType{
+    var levelType = allLevels[0]
+    for (level in allLevels){
+        if (level.text == text){
+            levelType = level
+        }
+    }
+    return levelType
+}

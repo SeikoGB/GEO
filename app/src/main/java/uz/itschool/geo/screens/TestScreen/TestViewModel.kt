@@ -13,10 +13,11 @@ class TestViewModel(val levelName: String): ViewModel() {
     private var _countries = MutableLiveData(model.getCountryList())
     val countries: LiveData<MutableList<Country>> = _countries
 
-    private var tempAnswers = model.getCountryList()
-
     private var _isGameFinished = MutableLiveData(false)
     val isGameFinished: LiveData<Boolean> = _isGameFinished
+
+    private var _isWon = MutableLiveData(true)
+    val isWon: LiveData<Boolean> = _isWon
 
     private var _timeProgress = MutableLiveData("20")
     val timeProgress: LiveData<String> = _timeProgress
@@ -36,9 +37,9 @@ class TestViewModel(val levelName: String): ViewModel() {
     private var _lives = MutableLiveData(3)
     val lives: LiveData<Int> = _lives
 
+    private var tempAnswers = model.getCountryList()
+
     private val listSize = _countries.value!!.size
-
-
 
     fun checkQuestion(country: Country):Boolean{
         return if (country == _currentQuestion.value){
@@ -52,6 +53,7 @@ class TestViewModel(val levelName: String): ViewModel() {
             _lives.value = _lives.value!! -1
             if (_lives.value == 0){
                 _isGameFinished.value = true
+                _isWon.value = false
             }
             false
         }
@@ -74,6 +76,8 @@ class TestViewModel(val levelName: String): ViewModel() {
         if (_questionNumber.value!! < listSize - 1){
             _questionNumber.value = _questionNumber.value!! + 1
             _currentQuestion.value = _countries.value!![_questionNumber.value!!]
+        }else{
+            _isGameFinished.value = true
         }
     }
 
@@ -90,6 +94,7 @@ class TestViewModel(val levelName: String): ViewModel() {
             }
             override fun onFinish() {
                 _isGameFinished.value = true
+                _isWon.value = false
                 finishGame()
             }
         }.start()
@@ -107,6 +112,4 @@ class TestViewModel(val levelName: String): ViewModel() {
         randomiseList()
         updateAnswers()
     }
-
-
 }
