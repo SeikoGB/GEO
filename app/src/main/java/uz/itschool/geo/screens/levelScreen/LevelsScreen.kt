@@ -1,6 +1,7 @@
 package uz.itschool.geo.screens.levelScreen
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -44,6 +45,7 @@ import uz.itschool.geo.localDatabase.entity.Level
 import uz.itschool.geo.model.LevelType
 import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
+import uz.itschool.geo.ui.theme.myGrey
 import uz.itschool.geo.ui.theme.whiteBackround
 
 
@@ -76,7 +78,6 @@ fun LevelsScreen(navController: NavController,
             }
         }
     }
-
 }
 
 @Composable
@@ -143,9 +144,9 @@ fun LevelItem(level: Level,
 
 
     var progress by remember {
-        mutableFloatStateOf(0f)
+        mutableFloatStateOf(level.score.toFloat()/level.maxQuestion.toFloat())
     }
-    progress = (level.score/level.maxQuestion).toFloat()
+    //progress = (level.score/level.maxQuestion).toFloat()
     
     val percentage by remember {
         mutableStateOf((progress*100).toInt())
@@ -154,6 +155,18 @@ fun LevelItem(level: Level,
     var isClickable by remember {
         mutableStateOf(level.isOpened)
     }
+
+    var itemBG by remember {
+        mutableStateOf(myGrey)
+    }
+
+    itemBG = if (level.isOpened){
+        Color.White
+    }else{
+        myGrey
+    }
+
+    Log.d("progress", "LevelItem: $progress")
 
 
     Box(modifier = Modifier
@@ -171,7 +184,9 @@ fun LevelItem(level: Level,
         .padding(3.dp)
         .clip(RoundedCornerShape(30))
         .background(Color.White)
+        .background(itemBG)
         .padding(10.dp)){
+
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -193,7 +208,8 @@ fun LevelItem(level: Level,
                         .height(20.dp)
                         .clip(RoundedCornerShape(50)),
                     progress = progress,
-                    color = myBlue,)
+                    color = myBlue,
+                    trackColor = myGrey)
 
                 Text(text = "${percentage}%",
                     color = Color.White)
@@ -202,6 +218,10 @@ fun LevelItem(level: Level,
 
             Text(text = "${level.score}/${level.maxQuestion}")
         }
+
+//        Box(modifier = Modifier
+//            .fillMaxSize()
+//            .background(itemBG))
     }
 
     Spacer(modifier = Modifier.height(16.dp))

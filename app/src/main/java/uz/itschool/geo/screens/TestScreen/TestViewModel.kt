@@ -38,6 +38,10 @@ class TestViewModel(val levelName: String): ViewModel() {
     private var _score = MutableLiveData(0)
     var score: LiveData<Int> = _score
 
+//    private var _scoreProgress = MutableLiveData((_score.value!! /
+//            thisLevel.maxQuestion).toFloat())
+//    var scoreProgress: LiveData<Float> = _scoreProgress
+
     private var _lives = MutableLiveData(3)
     val lives: LiveData<Int> = _lives
 
@@ -108,8 +112,13 @@ class TestViewModel(val levelName: String): ViewModel() {
     }
 
     fun updateLevel(){
-        thisLevel.score = _score.value!!
+        if (_score.value!!>thisLevel.score){
+            thisLevel.score = _score.value!!
+        }
         model.updateLevel(thisLevel)
+        if((score.value!!/thisLevel.maxQuestion)*100>=70){
+            model.unlockLevel(thisLevel.id+1)
+        }
 
     }
 

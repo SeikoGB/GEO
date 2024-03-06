@@ -14,6 +14,9 @@ interface LevelDao {
     @Insert
     fun addLevel(level: Level)
 
+    @Query("SELECT * FROM levels WHERE id = :id")
+    fun getLevelById(id: Int): Level
+
     @Query("SELECT * FROM levels WHERE categoryName = :categoryName")
     fun getLevelByCategory(categoryName: String): MutableList<Level>
 

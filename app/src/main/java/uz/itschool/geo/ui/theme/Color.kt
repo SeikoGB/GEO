@@ -17,6 +17,7 @@ val myOrange = Color(0xFFF68820)
 val myGreen = Color(0xFF3FBB44)
 val myLightBlue = Color(0xFF89C8FD)
 val myYellow = Color(0xFFF9D700)
+val myGrey = Color(0x80000000)
 
 val whiteBackround = Color(0xFFDFE2E6)
 

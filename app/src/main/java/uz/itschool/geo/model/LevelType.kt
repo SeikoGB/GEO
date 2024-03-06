@@ -21,12 +21,12 @@ val allLevels = mutableListOf(
     LevelType.VIRGIN_OPENER
 )
 
-fun getLevelTypeByText(text: String):LevelType{
+fun getLevelImgByText(text: String):Int{
     var levelType = allLevels[0]
     for (level in allLevels){
         if (level.text == text){
             levelType = level
         }
     }
-    return levelType
+    return levelType.image
 }
