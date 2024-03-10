@@ -9,15 +9,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -38,27 +34,19 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.localDatabase.entity.Country
-import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
-import uz.itschool.geo.ui.theme.myGreen
 import uz.itschool.geo.ui.theme.myRed
 import uz.itschool.geo.ui.theme.whiteBackround
 
 @Composable
-fun TestScreen(navController: NavController,
-               viewModel: TestViewModel){
+fun TextByImgTestScreen(navController: NavController,
+                        viewModel: TestViewModel){
 
-    val currentQuestion = viewModel.currentQuestion.observeAsState().value!!
-    val answers = viewModel.answers.observeAsState().value!!
-    //val score = viewModel.score.observeAsState().value!!
     val isGameFinished = viewModel.isGameFinished.observeAsState().value!!
 
     if (isGameFinished){
         viewModel.finishGame(navController)
     }
-
-
-    Log.d("answer", "TestScreen: $answers")
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -81,7 +69,7 @@ fun TestScreen(navController: NavController,
                     .background(myBlue)
                     .padding(3.dp)){
 
-                    Image(painter = painterResource(id = currentQuestion.flag),
+                    Image(painter = painterResource(id = viewModel.getImgQuestion()),
                         contentDescription = null,
                         modifier = Modifier.clip(RoundedCornerShape(15.dp))
                     )
@@ -94,24 +82,24 @@ fun TestScreen(navController: NavController,
                 Row(modifier = Modifier.weight(1f)) {
                     Box(modifier = Modifier
                         .weight(1f)){
-                        OptionItem(country = answers[0], viewModel)
+                        OptionItem(viewModel = viewModel, index = 0)
                     }
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Box(modifier = Modifier.weight(1f)){
-                        OptionItem(country = answers[1], viewModel)
+                        OptionItem(viewModel = viewModel, index = 1)
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Row(modifier = Modifier.weight(1f)) {
                     Box(modifier = Modifier.weight(1f)){
-                        OptionItem(country = answers[2], viewModel)
+                        OptionItem(viewModel = viewModel, index = 2)
                     }
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Box(modifier = Modifier.weight(1f)){
-                        OptionItem(country = answers[3], viewModel)
+                        OptionItem(viewModel = viewModel, index = 3)
                     }
                 }
             }
@@ -132,7 +120,9 @@ fun TestScreen(navController: NavController,
 }
 
 @Composable
-fun OptionItem(country: Country, viewModel: TestViewModel){
+fun OptionItem(viewModel: TestViewModel, index: Int){
+
+    val state = viewModel.answersState.observeAsState().value!![index]
 
     var cardBG by remember {
         mutableStateOf(Color.White)
@@ -140,28 +130,22 @@ fun OptionItem(country: Country, viewModel: TestViewModel){
     var textColor by remember {
         mutableStateOf(Color.Black)
     }
-    var cardEnabled by remember {
-        mutableStateOf(true)
-    }
+
 
     Box(modifier = Modifier
         .fillMaxSize()
         .clip(RoundedCornerShape(15.dp))
         .background(myBlue)
-        .clickable(cardEnabled) {
+        .clickable(state) {
 
-//            if (viewModel.checkQuestion(country)){
-//                cardBG = myGreen
-//                textColor = Color.White
-//                cardEnabled = true
-//            }else{
-//                cardBG = myRed
-//                textColor = Color.White
-//                cardEnabled = false
-//            }
+            viewModel.checkQuestion(index)
 
+            Log.d("wrong ans", "OptionItem: $state")
 
-            viewModel.checkQuestion(country)
+            if (!state) {
+                cardBG = myRed
+                textColor = Color.White
+            }
         }
         .padding(3.dp)
         .clip(RoundedCornerShape(15.dp))
@@ -169,23 +153,25 @@ fun OptionItem(country: Country, viewModel: TestViewModel){
         .padding(10.dp),
         contentAlignment = Alignment.Center){
         Text(
-            text = country.name,
+            text = viewModel.answers.value!![index].name,
             color = textColor,
             fontSize = 20.sp)
     }
 }
 
 @Composable
-private fun TestTopBar(viewModel: TestViewModel){
+fun TestTopBar(viewModel: TestViewModel){
     val timeProgress = viewModel.timeProgress.observeAsState().value!!
     val lives = viewModel.lives.observeAsState().value!!
 
-    Row(modifier = Modifier.fillMaxWidth().background(myBlue),
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .background(myBlue),
         horizontalArrangement = Arrangement.SpaceEvenly){
 
         Text(text = "Lives: $lives")
 
-        Text(text = viewModel.levelName)
+        Text(text = viewModel.thisLevel.levelName)
 
         Box(modifier = Modifier
             //.fillMaxHeight(),
@@ -204,5 +190,5 @@ private fun TestTopBar(viewModel: TestViewModel){
 private fun testtest(){
     val navController = rememberNavController()
     val viewModel = TestViewModel("levelName")
-    TestScreen(navController, viewModel)
+    TextByImgTestScreen(navController, viewModel)
 }

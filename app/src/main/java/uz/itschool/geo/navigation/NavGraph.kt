@@ -16,9 +16,10 @@ import uz.itschool.geo.screens.ResultScreen
 import uz.itschool.geo.screens.learnScreen.LearnScreen
 import uz.itschool.geo.screens.levelScreen.LevelsScreen
 import uz.itschool.geo.screens.SplashScreen
-import uz.itschool.geo.screens.TestScreen.CapitalCityTestScreen
-import uz.itschool.geo.screens.TestScreen.TestScreen
+import uz.itschool.geo.screens.TestScreen.ImgByTextTestScreen
+import uz.itschool.geo.screens.TestScreen.TextByImgTestScreen
 import uz.itschool.geo.screens.TestScreen.TestViewModel
+import uz.itschool.geo.screens.TestScreen.TextByTextTestScreen
 import uz.itschool.geo.screens.learnScreen.LearnViewModel
 import uz.itschool.geo.screens.levelScreen.LevelViewModel
 
@@ -73,16 +74,33 @@ fun NavGraph(navController: NavHostController){
                     testViewModel.startTimer()
                     viewModelCreated = true
                 }
-                //Log.d("TAggG", "NavGraph: ${viewModel.countries.value!!}")
 
                 when(categoryName){
-                    "{${CategoryType.COUNTRY_BY_FLAG.text}}" ->{
-                        TestScreen(
+                    "{${CategoryType.COUNTRY_BY_FLAG.path}}" ->{
+                        testViewModel.questionType = "flag"
+                        testViewModel.answerType = "country"
+                        TextByImgTestScreen(
                             navController = navController,
                             viewModel = testViewModel)
                     }
-                    "{${CategoryType.COUNTRY_BY_CAPITAL.text}}" ->{
-                        CapitalCityTestScreen()
+                    "{${CategoryType.COUNTRY_BY_CAPITAL.path}}" ->{
+                        testViewModel.questionType = "capital"
+                        testViewModel.answerType = "country"
+                        TextByTextTestScreen()
+                    }
+                    "{${CategoryType.FLAG_BY_COUNTRY.path}}" ->{
+                        testViewModel.questionType = "country"
+                        testViewModel.answerType = "flag"
+                        ImgByTextTestScreen(
+                            navController = navController,
+                            viewModel = testViewModel)
+                    }
+                    "{${CategoryType.FLAG_BY_CAPITAL.path}}" ->{
+                        testViewModel.questionType = "capital"
+                        testViewModel.answerType = "flag"
+                        ImgByTextTestScreen(
+                            navController = navController,
+                            viewModel = testViewModel)
                     }
                 }
             }

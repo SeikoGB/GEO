@@ -63,8 +63,10 @@ import uz.itschool.geo.ui.theme.whiteBackround
 fun HomeScreen(navController: NavController){
 
     val categories by remember {
-        mutableStateOf(mutableListOf(CategoryHolder.COUNTRY,
-            CategoryHolder.CAPITAL))
+        mutableStateOf(mutableListOf(
+            CategoryHolder.COUNTRY,
+            CategoryHolder.CAPITAL,
+            CategoryHolder.FLAG))
     }
 
     Box(modifier = Modifier
@@ -139,7 +141,7 @@ fun CategoryItem(category: CategoryType,
         .fillMaxWidth()
         .clip(RoundedCornerShape(corner = CornerSize(20.dp)))
         .clickable {
-            navController.navigate(Screens.Level.passCategoryType(category.text))
+            navController.navigate(Screens.Level.passCategoryType(category.path))
         }){
 
         Column(modifier = Modifier

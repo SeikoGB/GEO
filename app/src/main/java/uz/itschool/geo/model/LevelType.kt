@@ -11,7 +11,7 @@ enum class LevelType(val text:String, val image:Int) {
     SCIENTIST("Scientist",R.drawable.chemistry),
     VIRGIN_OPENER("Land Opener",R.drawable.virgin_opener)
 }
-val allLevels = mutableListOf(
+val allLevelTypes = mutableListOf(
     LevelType.STUDENT,
     LevelType.TOURIST,
     LevelType.DRIVER,
@@ -22,8 +22,8 @@ val allLevels = mutableListOf(
 )
 
 fun getLevelImgByText(text: String):Int{
-    var levelType = allLevels[0]
-    for (level in allLevels){
+    var levelType = allLevelTypes[0]
+    for (level in allLevelTypes){
         if (level.text == text){
             levelType = level
         }

@@ -166,7 +166,7 @@ fun LevelItem(level: Level,
         myGrey
     }
 
-    Log.d("progress", "LevelItem: $progress")
+    //Log.d("progress", "LevelItem: $progress")
 
 
     Box(modifier = Modifier

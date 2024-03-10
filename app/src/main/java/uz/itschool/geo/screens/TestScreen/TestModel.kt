@@ -30,12 +30,5 @@ class TestModel(val levelName:String) {
             level.isOpened = true
             updateLevel(level)
         }
-
-
-
-
     }
-
-
-
 }

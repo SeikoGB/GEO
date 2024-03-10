@@ -1,16 +1,20 @@
 package uz.itschool.geo.screens.TestScreen
 
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import uz.itschool.geo.localDatabase.entity.Country
 import uz.itschool.geo.navigation.Screens
+import kotlin.math.log
 
-class TestViewModel(val levelName: String): ViewModel() {
+class TestViewModel(levelName: String,): ViewModel() {
     private val model = TestModel(levelName)
     private var timer: CountDownTimer? = null
+    var questionType: String = ""
+    var answerType: String = ""
 
     var thisLevel = model.getLevel()
 
@@ -35,6 +39,9 @@ class TestViewModel(val levelName: String): ViewModel() {
     private var _answers = MutableLiveData(mutableListOf<Country>())
     var answers: LiveData<MutableList<Country>> = _answers
 
+    private var _answersState = MutableLiveData(mutableListOf(true, true, true, true))
+    val answersState: LiveData<MutableList<Boolean>> = _answersState
+
     private var _score = MutableLiveData(0)
     var score: LiveData<Int> = _score
 
@@ -49,21 +56,41 @@ class TestViewModel(val levelName: String): ViewModel() {
 
     private val listSize = _countries.value!!.size
 
-    fun checkQuestion(country: Country):Boolean{
-        return if (country == _currentQuestion.value){
+    fun getStringQuestion():String{
+        var q = ""
+        when(questionType){
+            "capital"->{
+                q = _currentQuestion.value!!.capital
+            }
+            "country"->{
+                q = _currentQuestion.value!!.name
+            }
+        }
+        return q
+    }
+
+
+    fun getImgQuestion():Int{
+        return _currentQuestion.value!!.flag
+    }
+
+
+
+    fun checkQuestion(index: Int){
+        val country = _answers.value!![index]
+         if (country == _currentQuestion.value!!){
             _score.value = _score.value!! + 1
             stopTimer()
             nextQuestion()
             updateAnswers()
             startTimer()
-            true
         }else{
             _lives.value = _lives.value!! -1
+            _answersState.value!![index] = false
             if (_lives.value == 0){
                 _isGameFinished.value = true
                 _isWon.value = false
             }
-            false
         }
     }
 
@@ -84,6 +111,7 @@ class TestViewModel(val levelName: String): ViewModel() {
         if (_questionNumber.value!! < listSize - 1){
             _questionNumber.value = _questionNumber.value!! + 1
             _currentQuestion.value = _countries.value!![_questionNumber.value!!]
+            _answersState.value = mutableListOf(true, true, true, true)
         }else{
             _isGameFinished.value = true
         }
