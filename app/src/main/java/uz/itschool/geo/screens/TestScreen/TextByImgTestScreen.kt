@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -43,6 +44,7 @@ fun TextByImgTestScreen(navController: NavController,
                         viewModel: TestViewModel){
 
     val isGameFinished = viewModel.isGameFinished.observeAsState().value!!
+    val currentQuestion=viewModel.currentQuestion.observeAsState().value!!
 
     if (isGameFinished){
         viewModel.finishGame(navController)
@@ -69,7 +71,7 @@ fun TextByImgTestScreen(navController: NavController,
                     .background(myBlue)
                     .padding(3.dp)){
 
-                    Image(painter = painterResource(id = viewModel.getImgQuestion()),
+                    Image(painter = painterResource(id = currentQuestion.flag),
                         contentDescription = null,
                         modifier = Modifier.clip(RoundedCornerShape(15.dp))
                     )
@@ -122,7 +124,8 @@ fun TextByImgTestScreen(navController: NavController,
 @Composable
 fun OptionItem(viewModel: TestViewModel, index: Int){
 
-    val state = viewModel.answersState.observeAsState().value!![index]
+    val statee = viewModel.answersState.observeAsState()
+    val state=statee.value!![index]
 
     var cardBG by remember {
         mutableStateOf(Color.White)

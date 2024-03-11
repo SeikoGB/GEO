@@ -41,6 +41,7 @@ fun ImgByTextTestScreen(navController: NavController,
 
     val isGameFinished = viewModel.isGameFinished.observeAsState().value!!
 
+
     if (isGameFinished){
         viewModel.finishGame(navController)
     }
