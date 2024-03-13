@@ -10,6 +10,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import uz.itschool.geo.App
+import uz.itschool.geo.localDatabase.AppDataBase
 import uz.itschool.geo.model.CategoryType
 import uz.itschool.geo.screens.HomeScreen
 import uz.itschool.geo.screens.ResultScreen
@@ -17,6 +19,7 @@ import uz.itschool.geo.screens.learnScreen.LearnScreen
 import uz.itschool.geo.screens.levelScreen.LevelsScreen
 import uz.itschool.geo.screens.SplashScreen
 import uz.itschool.geo.screens.TestScreen.ImgByTextTestScreen
+import uz.itschool.geo.screens.TestScreen.TestModel
 import uz.itschool.geo.screens.TestScreen.TextByImgTestScreen
 import uz.itschool.geo.screens.TestScreen.TestViewModel
 import uz.itschool.geo.screens.TestScreen.TextByTextTestScreen
@@ -54,48 +57,50 @@ fun NavGraph(navController: NavHostController){
             }
         }
 
-
-
         composable(route = Screens.Test.route,
-            arguments = listOf(navArgument(PASS_LEVEL_TYPE){
-                type = NavType.StringType
+            arguments = listOf(navArgument(PASS_LEVEL_ID){
+                type = NavType.IntType
             })
         ){navBackStackEntry ->
-            val levelName = navBackStackEntry.arguments?.getString(PASS_LEVEL_TYPE)
-            val categoryName = navBackStackEntry.arguments?.getString(PASS_CATEGORY_TYPE)
+            val levelId = navBackStackEntry.arguments?.getInt(PASS_LEVEL_ID)
 
-            if (levelName != null){
+            val appDatabase: AppDataBase by lazy {
+                AppDataBase.getInstance(App.app)
+            }
+
+            if (levelId != null){
                 var viewModelCreated by remember {
                     mutableStateOf(false)
                 }
+                val level = appDatabase.getLevelDao().getLevelById(levelId)
 
                 if (!viewModelCreated){
-                    testViewModel = TestViewModel(levelName.drop(1).dropLast(1))
+                    testViewModel = TestViewModel(levelId)
                     testViewModel.startTimer()
                     viewModelCreated = true
                 }
 
-                when(categoryName){
-                    "{${CategoryType.COUNTRY_BY_FLAG.path}}" ->{
+                when(level.categoryName){
+                    CategoryType.COUNTRY_BY_FLAG.path ->{
                         testViewModel.questionType = "flag"
                         testViewModel.answerType = "country"
                         TextByImgTestScreen(
                             navController = navController,
                             viewModel = testViewModel)
                     }
-                    "{${CategoryType.COUNTRY_BY_CAPITAL.path}}" ->{
+                    CategoryType.COUNTRY_BY_CAPITAL.path ->{
                         testViewModel.questionType = "capital"
                         testViewModel.answerType = "country"
                         TextByTextTestScreen()
                     }
-                    "{${CategoryType.FLAG_BY_COUNTRY.path}}" ->{
+                    CategoryType.FLAG_BY_COUNTRY.path ->{
                         testViewModel.questionType = "country"
                         testViewModel.answerType = "flag"
                         ImgByTextTestScreen(
                             navController = navController,
                             viewModel = testViewModel)
                     }
-                    "{${CategoryType.FLAG_BY_CAPITAL.path}}" ->{
+                    CategoryType.FLAG_BY_CAPITAL.path ->{
                         testViewModel.questionType = "capital"
                         testViewModel.answerType = "flag"
                         ImgByTextTestScreen(

@@ -64,25 +64,25 @@ dependencies {
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.google.firebase:firebase-auth:22.3.1")
-    implementation("com.google.android.gms:play-services-auth:21.0.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+//    implementation("com.google.android.gms:play-services-auth:21.0.0")
+//    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.02"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     //Firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
+    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
     //firebase auth
     implementation("com.google.firebase:firebase-auth")
 
     //Navigation
     implementation ("androidx.navigation:navigation-compose:2.7.7")
 
-    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
     //Room database
     implementation ("androidx.room:room-runtime:2.6.1")

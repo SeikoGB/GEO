@@ -2,7 +2,7 @@ package uz.itschool.geo.navigation
 
 
 const val PASS_CATEGORY_TYPE = "category_type"
-const val PASS_LEVEL_TYPE = "level_type"
+const val PASS_LEVEL_ID = "level_id"
 
 sealed class Screens(var route: String) {
 
@@ -19,11 +19,11 @@ sealed class Screens(var route: String) {
         }
     }
 
-    object Test: Screens("test/{$PASS_LEVEL_TYPE}/{$PASS_CATEGORY_TYPE}"){
-        fun passLevelAndCategoryType(levelName: String, categoryName: String): String{
+    object Test: Screens("test/{$PASS_LEVEL_ID}"){
+        fun passLevelId(id: Int): String{
             return this.route.replace(
-                oldValue = "{$PASS_LEVEL_TYPE}/{$PASS_CATEGORY_TYPE}",
-                newValue = "{$levelName}/{$categoryName}"
+                oldValue = "{$PASS_LEVEL_ID}",
+                newValue = id.toString()
             )
         }
     }

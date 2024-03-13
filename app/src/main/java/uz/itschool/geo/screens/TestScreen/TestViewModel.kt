@@ -10,15 +10,17 @@ import uz.itschool.geo.localDatabase.entity.Country
 import uz.itschool.geo.navigation.Screens
 import kotlin.math.log
 
-class TestViewModel(levelName: String,): ViewModel() {
-    private val model = TestModel(levelName)
+class TestViewModel(val levelId: Int): ViewModel() {
+
+    private val model = TestModel()
     private var timer: CountDownTimer? = null
     var questionType: String = ""
     var answerType: String = ""
 
-    var thisLevel = model.getLevel()
+    var thisLevel = model.getLevel(levelId)
 
-    private var _countries = MutableLiveData(model.getCountryList())
+
+    private var _countries = MutableLiveData(model.getCountryList(levelId))
     val countries: LiveData<MutableList<Country>> = _countries
 
     private var _isGameFinished = MutableLiveData(false)
@@ -45,33 +47,46 @@ class TestViewModel(levelName: String,): ViewModel() {
     private var _score = MutableLiveData(0)
     var score: LiveData<Int> = _score
 
-
     private var _lives = MutableLiveData(3)
     val lives: LiveData<Int> = _lives
 
-    private var tempAnswers = model.getCountryList()
+    private var tempAnswers = model.getCountryList(levelId)
 
     private val listSize = _countries.value!!.size
 
-    fun getStringQuestion():String{
+    fun getStringQuestion(country: Country):String{
         var q = ""
         when(questionType){
             "capital"->{
-                q = _currentQuestion.value!!.capital
+                q = country.capital
             }
             "country"->{
-                q = _currentQuestion.value!!.name
+                q = country.name
             }
         }
         return q
     }
 
-
-    fun getImgQuestion():Int{
-        return _currentQuestion.value!!.flag
+    fun getImgQuestion(country: Country):Int{
+        return country.flag
     }
 
+    fun getStringAnswer(country: Country):String{
+        var a = ""
+        when(answerType){
+            "capital"->{
+                a = country.capital
+            }
+            "country"->{
+                a = country.name
+            }
+        }
+        return a
+    }
 
+    fun getIntAnswer(country: Country):Int{
+        return country.flag
+    }
 
     fun checkQuestion(index: Int){
         val country = _answers.value!![index]
@@ -101,7 +116,7 @@ class TestViewModel(levelName: String,): ViewModel() {
         _answers.value!!.add(tempAnswers[2])
         _answers.value!!.shuffle()
 
-        tempAnswers = model.getCountryList()
+        tempAnswers = model.getCountryList(levelId)
     }
 
     fun nextQuestion(){
@@ -154,6 +169,7 @@ class TestViewModel(levelName: String,): ViewModel() {
     }
 
     init {
+        model.setLevel(levelId)
         randomiseList()
         updateAnswers()
     }

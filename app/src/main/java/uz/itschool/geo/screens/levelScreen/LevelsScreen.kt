@@ -1,7 +1,6 @@
 package uz.itschool.geo.screens.levelScreen
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,7 +41,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import uz.itschool.geo.R
 import uz.itschool.geo.localDatabase.entity.Level
-import uz.itschool.geo.model.LevelType
 import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
 import uz.itschool.geo.ui.theme.myGrey
@@ -174,9 +172,8 @@ fun LevelItem(level: Level,
         .clip(RoundedCornerShape(30))
         .clickable(isClickable) {
             navController.navigate(
-                Screens.Test.passLevelAndCategoryType(
-                    level.levelName,
-                    level.categoryName
+                Screens.Test.passLevelId(
+                    id = level.id
                 )
             )
         }

@@ -18,7 +18,6 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -34,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import uz.itschool.geo.localDatabase.entity.Country
 import uz.itschool.geo.ui.theme.myBlue
 import uz.itschool.geo.ui.theme.myRed
 import uz.itschool.geo.ui.theme.whiteBackround
@@ -71,7 +69,8 @@ fun TextByImgTestScreen(navController: NavController,
                     .background(myBlue)
                     .padding(3.dp)){
 
-                    Image(painter = painterResource(id = currentQuestion.flag),
+                    Image(painter = painterResource
+                        (id = viewModel.getImgQuestion(currentQuestion)),
                         contentDescription = null,
                         modifier = Modifier.clip(RoundedCornerShape(15.dp))
                     )
@@ -84,24 +83,24 @@ fun TextByImgTestScreen(navController: NavController,
                 Row(modifier = Modifier.weight(1f)) {
                     Box(modifier = Modifier
                         .weight(1f)){
-                        OptionItem(viewModel = viewModel, index = 0)
+                        TextOptionItem(viewModel = viewModel, index = 0)
                     }
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Box(modifier = Modifier.weight(1f)){
-                        OptionItem(viewModel = viewModel, index = 1)
+                        TextOptionItem(viewModel = viewModel, index = 1)
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Row(modifier = Modifier.weight(1f)) {
                     Box(modifier = Modifier.weight(1f)){
-                        OptionItem(viewModel = viewModel, index = 2)
+                        TextOptionItem(viewModel = viewModel, index = 2)
                     }
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Box(modifier = Modifier.weight(1f)){
-                        OptionItem(viewModel = viewModel, index = 3)
+                        TextOptionItem(viewModel = viewModel, index = 3)
                     }
                 }
             }
@@ -122,10 +121,10 @@ fun TextByImgTestScreen(navController: NavController,
 }
 
 @Composable
-fun OptionItem(viewModel: TestViewModel, index: Int){
+fun TextOptionItem(viewModel: TestViewModel, index: Int){
 
-    val statee = viewModel.answersState.observeAsState()
-    val state=statee.value!![index]
+    val states = viewModel.answersState.observeAsState()
+    val state=states.value!![index]
 
     var cardBG by remember {
         mutableStateOf(Color.White)
@@ -190,8 +189,8 @@ fun TestTopBar(viewModel: TestViewModel){
 
 @Preview(showBackground = true)
 @Composable
-private fun testtest(){
+private fun Testtest(){
     val navController = rememberNavController()
-    val viewModel = TestViewModel("levelName")
+    val viewModel = TestViewModel(1)
     TextByImgTestScreen(navController, viewModel)
 }

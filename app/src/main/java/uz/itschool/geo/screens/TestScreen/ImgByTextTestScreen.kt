@@ -1,7 +1,5 @@
 package uz.itschool.geo.screens.TestScreen
 
-import android.graphics.Paint.Style
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -40,6 +39,7 @@ fun ImgByTextTestScreen(navController: NavController,
                         viewModel: TestViewModel){
 
     val isGameFinished = viewModel.isGameFinished.observeAsState().value!!
+    val currentQuestion = viewModel.currentQuestion.observeAsState().value!!
 
 
     if (isGameFinished){
@@ -65,9 +65,13 @@ fun ImgByTextTestScreen(navController: NavController,
                     .align(Alignment.Center)
                     .clip(RoundedCornerShape(CornerSize(15.dp)))
                     .background(myBlue)
-                    .padding(3.dp)){
+                    .padding(3.dp)
+                    .background(Color.White)
+                    .clip(RoundedCornerShape(CornerSize(15.dp)))
+                    .padding(10.dp)){
 
-                    Text(text = viewModel.getStringQuestion(),
+                    Text(text = viewModel.getStringQuestion(currentQuestion),
+                        modifier = Modifier.clip(RoundedCornerShape(CornerSize(15.dp))),
                         fontSize = 40.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black)
@@ -110,7 +114,10 @@ fun ImgByTextTestScreen(navController: NavController,
 @Composable
 fun ImageOptionItem(viewModel: TestViewModel, index: Int){
 
-    val state = viewModel.answersState.observeAsState().value!![index]
+    val states = viewModel.answersState.observeAsState().value!!
+    val state = states[index]
+    val answers = viewModel.answers.observeAsState().value!!
+    val answer = answers[index]
 
     var cardBG by remember {
         mutableStateOf(Color.White)
@@ -127,8 +134,6 @@ fun ImageOptionItem(viewModel: TestViewModel, index: Int){
 
             viewModel.checkQuestion(index)
 
-            //Log.d("wrong ans", "OptionItem: $state")
-
             if (!state) {
                 cardBG = myRed
                 textColor = Color.White
@@ -138,13 +143,13 @@ fun ImageOptionItem(viewModel: TestViewModel, index: Int){
         }
         .padding(3.dp)
         .clip(RoundedCornerShape(15.dp))
-        .background(cardBG)
-        .padding(10.dp),
+        .background(cardBG),
         contentAlignment = Alignment.Center){
         Image(
-            painter = painterResource(
-                id = viewModel.answers.value!![index].flag),
-            contentDescription = null)
+            painter = painterResource(id = viewModel.getIntAnswer(answer)),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop)
     }
 
 }

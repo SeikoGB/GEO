@@ -2,7 +2,6 @@ package uz.itschool.geo.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -92,9 +90,7 @@ fun ResultScreen(navController: NavController,
 
             Button(onClick = {
                 navController.navigate(Screens.Test
-                    .passLevelAndCategoryType(
-                        levelName = viewModel.thisLevel.levelName,
-                    categoryName = viewModel.thisLevel.categoryName)) }) {
+                    .passLevelId(id = viewModel.thisLevel.id)) }) {
                 Icon(imageVector = Icons.Default.Refresh,
                     contentDescription = null,
                     modifier = Modifier.size(50.dp),
@@ -111,6 +107,6 @@ fun ResultScreen(navController: NavController,
 @Composable
 private fun resulttest(){
     val navController = rememberNavController()
-    val viewModel = TestViewModel("levelName")
+    val viewModel = TestViewModel(0)
     ResultScreen(navController, viewModel)
 }
