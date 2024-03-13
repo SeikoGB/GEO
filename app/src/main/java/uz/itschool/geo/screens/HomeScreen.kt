@@ -1,6 +1,9 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package uz.itschool.geo.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,6 +24,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -130,6 +135,58 @@ fun HomeScreen(navController: NavController){
                 HomeBottomBar()
             }
         }
+    }
+}
+
+@Composable
+fun HomeWithPager(navController: NavController){
+    val categories by remember {
+        mutableStateOf(mutableListOf(
+            CategoryHolder.COUNTRY,
+            CategoryHolder.CAPITAL,
+            CategoryHolder.FLAG))
+    }
+    val pagerState= rememberPagerState(pageCount = {categories.size})
+
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(whiteBackround),
+        contentAlignment = Alignment.TopStart){
+
+        HomeTopBar()
+
+        Column(modifier = Modifier
+            .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            HorizontalPager(state = pagerState ) { categoryHolder->
+                LazyRow(modifier = Modifier.fillMaxWidth(),){
+                    items(categories[categoryHolder].categories){category->
+                        CategoryItem(category = category,
+                            navController = navController)
+
+                        Spacer(modifier = Modifier.width(16.dp))
+                    }
+                }
+            }
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)){
+
+
+
+                Spacer(modifier = Modifier.height(420.dp))
+                Competition()
+                LearnButton(navController)
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                HomeBottomBar()
+            }
+        }
+
     }
 }
 
@@ -270,5 +327,5 @@ fun HomeBottomBar(){
 @Composable
 fun hometest(){
     val navController = rememberNavController()
-    HomeScreen(navController)
+    HomeWithPager(navController = navController)
 }
