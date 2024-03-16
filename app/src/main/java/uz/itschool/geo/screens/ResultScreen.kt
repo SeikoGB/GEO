@@ -42,7 +42,6 @@ fun ResultScreen(navController: NavController,
     var wonMessage by remember {
         mutableStateOf("")
     }
-
     var resultBG by remember {
         mutableStateOf(myRed)
     }
@@ -54,7 +53,6 @@ fun ResultScreen(navController: NavController,
         wonMessage = "You lost"
         resultBG = myRed
     }
-
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -97,10 +95,7 @@ fun ResultScreen(navController: NavController,
                     tint = Color.White)
             }
         }
-
-
     }
-
 }
 
 @Preview(showBackground = true)

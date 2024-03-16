@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -125,6 +126,8 @@ fun TextOptionItem(viewModel: TestViewModel, index: Int){
 
     val states = viewModel.answersState.observeAsState()
     val state=states.value!![index]
+    val answers = viewModel.answers.observeAsState().value!!
+    val answer = answers[index]
 
     var cardBG by remember {
         mutableStateOf(Color.White)
@@ -155,7 +158,7 @@ fun TextOptionItem(viewModel: TestViewModel, index: Int){
         .padding(10.dp),
         contentAlignment = Alignment.Center){
         Text(
-            text = viewModel.answers.value!![index].name,
+            text = viewModel.getStringAnswer(answer),
             color = textColor,
             fontSize = 20.sp)
     }
@@ -163,25 +166,39 @@ fun TextOptionItem(viewModel: TestViewModel, index: Int){
 
 @Composable
 fun TestTopBar(viewModel: TestViewModel){
-    val timeProgress = viewModel.timeProgress.observeAsState().value!!
+    var timeProgress = viewModel.timeProgress.observeAsState().value!!
     val lives = viewModel.lives.observeAsState().value!!
+
+    if (timeProgress.length == 1){
+        timeProgress = "0$timeProgress"
+    }
 
     Row(modifier = Modifier
         .fillMaxWidth()
-        .background(myBlue),
+        .background(myBlue)
+        .padding(10.dp),
         horizontalArrangement = Arrangement.SpaceEvenly){
 
-        Text(text = "Lives: $lives")
+        Text(text = "Lives: $lives",
+            color = Color.White,
+            fontSize = 25.sp)
 
-        Text(text = viewModel.thisLevel.levelName)
+        Text(text = viewModel.thisLevel.levelName,
+            color = Color.White,
+            fontSize = 25.sp)
 
         Box(modifier = Modifier
-            //.fillMaxHeight(),
-            ,
+            .clip(RoundedCornerShape(50))
+            .background(Color.White).padding(3.dp)
+            .clip(RoundedCornerShape(50))
+            .background(myBlue)
+            .padding(10.dp),
             contentAlignment = Alignment.Center){
             Text(text = timeProgress,
                 color = Color.White,
-                fontSize = 25.sp)
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }

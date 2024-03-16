@@ -91,7 +91,10 @@ fun NavGraph(navController: NavHostController){
                     CategoryType.COUNTRY_BY_CAPITAL.path ->{
                         testViewModel.questionType = "capital"
                         testViewModel.answerType = "country"
-                        TextByTextTestScreen()
+                        TextByTextTestScreen(
+                            navController = navController,
+                            viewModel = testViewModel
+                        )
                     }
                     CategoryType.FLAG_BY_COUNTRY.path ->{
                         testViewModel.questionType = "country"
@@ -106,6 +109,22 @@ fun NavGraph(navController: NavHostController){
                         ImgByTextTestScreen(
                             navController = navController,
                             viewModel = testViewModel)
+                    }
+                    CategoryType.CAPITAL_BY_COUNTRY.path ->{
+                        testViewModel.questionType = "country"
+                        testViewModel.answerType = "capital"
+                        TextByTextTestScreen(
+                            navController = navController,
+                            viewModel = testViewModel
+                        )
+                    }
+                    CategoryType.CAPITAL_BY_FLAG.path ->{
+                        testViewModel.questionType = "flag"
+                        testViewModel.answerType = "capital"
+                        TextByImgTestScreen(
+                            navController = navController,
+                            viewModel = testViewModel)
+
                     }
                 }
             }

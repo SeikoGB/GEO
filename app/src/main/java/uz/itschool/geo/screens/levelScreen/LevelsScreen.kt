@@ -104,7 +104,7 @@ fun TopBar(message: String,
                 modifier = Modifier
                     .size(30.dp)
                     .clickable {
-                        navController.popBackStack()
+                        navController.navigate(Screens.Home.route)
                     })
 
             Spacer(modifier = Modifier.width(10.dp))
