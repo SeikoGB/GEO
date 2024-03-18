@@ -57,7 +57,7 @@ fun LearnScreen(navController: NavController, viewModel: LearnViewModel) {
         .fillMaxSize()
         .background(whiteBackround)){
 
-        TopBar(message = "", coins = 45, navController = navController)
+        TopBar(message = "", coins = 100, navController = navController)
 
 
         LazyColumn(modifier = Modifier.padding(
