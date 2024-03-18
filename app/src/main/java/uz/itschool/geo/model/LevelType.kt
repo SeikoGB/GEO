@@ -9,7 +9,7 @@ enum class LevelType(val text:String, val image:Int, val factor: Int) {
     CAPTAIN("Captain", R.drawable.captain, 7),
     TEACHER("Teacher", R.drawable.teacher, 8),
     SCIENTIST("Scientist",R.drawable.chemistry, 9),
-    VIRGIN_OPENER("Land Opener",R.drawable.virgin_opener, 10)
+    LAND_OPENER("Land Opener",R.drawable.land_opener, 10)
 }
 val allLevelTypes = mutableListOf(
     LevelType.STUDENT,
@@ -18,7 +18,7 @@ val allLevelTypes = mutableListOf(
     LevelType.CAPTAIN,
     LevelType.TEACHER,
     LevelType.SCIENTIST,
-    LevelType.VIRGIN_OPENER
+    LevelType.LAND_OPENER
 )
 
 fun getLevelImgByText(text: String):Int{
