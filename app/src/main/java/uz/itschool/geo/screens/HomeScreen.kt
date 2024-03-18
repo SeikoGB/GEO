@@ -69,7 +69,7 @@ fun HomeScreen(navController: NavController){
 
     val categories by remember {
         mutableStateOf(mutableListOf(
-            CategoryHolder.COUNTRY,
+            CategoryHolder.COUNTRY,  
             CategoryHolder.CAPITAL,
             CategoryHolder.FLAG))
     }
@@ -166,6 +166,8 @@ fun HomeWithPager(navController: NavController){
                     Text(text = categories[categoryHolder].text,
                         fontSize = 30.sp,
                         color = Color.White,)
+
+                    Spacer(modifier = Modifier.height(10.dp))
                     LazyRow(modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceAround){
                         items(categories[categoryHolder].categories){category->
@@ -189,11 +191,12 @@ fun HomeWithPager(navController: NavController){
                 .padding(16.dp),
                 ){
                 Competition()
+                Spacer(modifier = Modifier.height(10.dp))
                 LearnButton(navController)
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                HomeBottomBar()
+//                HomeBottomBar()
             }
         }
 
