@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import uz.itschool.geo.localDatabase.entity.Country
+import uz.itschool.geo.model.getGetFactorByText
 import uz.itschool.geo.navigation.Screens
 import kotlin.math.log
 
@@ -96,7 +97,7 @@ class TestViewModel(val levelId: Int): ViewModel() {
          if (country == _currentQuestion.value!!){
             _score.value = _score.value!! + 1
             stopTimer()
-             addPoints()
+            addPoints()
             nextQuestion()
             updateAnswers()
             startTimer()
@@ -124,7 +125,8 @@ class TestViewModel(val levelId: Int): ViewModel() {
     }
 
     fun addPoints(){
-        val a = (_timeProgress.value!!/2*5).toInt()
+        val f = getGetFactorByText(thisLevel.levelName)
+        val a = (_timeProgress.value!!/4*5)*f/20
         _points.value = _points.value!!+a
     }
 

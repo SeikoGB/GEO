@@ -13,9 +13,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,7 +38,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import uz.itschool.geo.navigation.Screens
 import uz.itschool.geo.ui.theme.myBlue
+import uz.itschool.geo.ui.theme.myGreen
 import uz.itschool.geo.ui.theme.myRed
 import uz.itschool.geo.ui.theme.whiteBackround
 
@@ -54,7 +60,7 @@ fun TextByImgTestScreen(navController: NavController,
         .background(whiteBackround),
         horizontalAlignment = Alignment.CenterHorizontally){
 
-        TestTopBar(viewModel)
+        TestTopBar(viewModel, navController)
 
         Column(modifier = Modifier
             .fillMaxSize()
@@ -124,17 +130,18 @@ fun TextByImgTestScreen(navController: NavController,
 @Composable
 fun TextOptionItem(viewModel: TestViewModel, index: Int){
 
-    val states = viewModel.answersState.observeAsState()
-    val state=states.value!![index]
+    val states = viewModel.answersState.observeAsState().value!!
+    var state = states[index]
+
     val answers = viewModel.answers.observeAsState().value!!
     val answer = answers[index]
 
-    var cardBG by remember {
-        mutableStateOf(Color.White)
-    }
-    var textColor by remember {
-        mutableStateOf(Color.Black)
-    }
+    var cardBG = Color.White
+    //var textColor = Color.Black
+
+    Log.d("ans", "TextOptionItem: $state")
+
+
 
 
     Box(modifier = Modifier
@@ -145,12 +152,17 @@ fun TextOptionItem(viewModel: TestViewModel, index: Int){
 
             viewModel.checkQuestion(index)
 
+            state = states[index]
+            //textColor = Color.White
+
+            cardBG = if (state){
+                myGreen
+            }else{
+                myRed
+            }
+
             Log.d("wrong ans", "OptionItem: $state")
 
-            if (!state) {
-                cardBG = myRed
-                textColor = Color.White
-            }
         }
         .padding(3.dp)
         .clip(RoundedCornerShape(15.dp))
@@ -159,13 +171,13 @@ fun TextOptionItem(viewModel: TestViewModel, index: Int){
         contentAlignment = Alignment.Center){
         Text(
             text = viewModel.getStringAnswer(answer),
-            color = textColor,
+            color = Color.Black,
             fontSize = 20.sp)
     }
 }
 
 @Composable
-fun TestTopBar(viewModel: TestViewModel){
+fun TestTopBar(viewModel: TestViewModel, navController:NavController){
     val timeProgress = viewModel.timeProgress.observeAsState().value!!
     val lives = viewModel.lives.observeAsState().value!!
 
@@ -181,6 +193,15 @@ fun TestTopBar(viewModel: TestViewModel){
         .padding(10.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically){
+
+        Icon(imageVector = Icons.Default.ArrowBack,
+            contentDescription = null,
+            tint = Color.White,
+            modifier = Modifier
+                .size(50.dp)
+                .clickable {
+                    navController.navigate(Screens.Level.route)
+                })
 
         Text(text = "Lives: $lives",
             color = Color.White,

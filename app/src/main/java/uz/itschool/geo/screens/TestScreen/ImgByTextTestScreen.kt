@@ -51,7 +51,7 @@ fun ImgByTextTestScreen(navController: NavController,
         .background(whiteBackround),
         horizontalAlignment = Alignment.CenterHorizontally){
 
-        TestTopBar(viewModel)
+        TestTopBar(viewModel, navController)
 
         Column(modifier = Modifier
             .fillMaxSize()
@@ -66,8 +66,8 @@ fun ImgByTextTestScreen(navController: NavController,
                     .clip(RoundedCornerShape(CornerSize(15.dp)))
                     .background(myBlue)
                     .padding(3.dp)
-                    .background(Color.White)
                     .clip(RoundedCornerShape(CornerSize(15.dp)))
+                    .background(Color.White)
                     .padding(10.dp)){
 
                     Text(text = viewModel.getStringQuestion(currentQuestion),
@@ -150,7 +150,7 @@ fun ImageOptionItem(viewModel: TestViewModel, index: Int){
             painter = painterResource(id = viewModel.getIntAnswer(answer)),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop)
+            contentScale = ContentScale.FillBounds)
     }
 
 }

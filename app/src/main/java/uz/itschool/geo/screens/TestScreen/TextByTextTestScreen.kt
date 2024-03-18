@@ -41,7 +41,7 @@ fun TextByTextTestScreen(navController: NavController,
         .background(whiteBackround),
         horizontalAlignment = Alignment.CenterHorizontally){
 
-        TestTopBar(viewModel)
+        TestTopBar(viewModel, navController)
 
         Column(modifier = Modifier
             .fillMaxSize()
