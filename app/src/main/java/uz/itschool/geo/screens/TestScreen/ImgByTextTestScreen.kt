@@ -74,7 +74,8 @@ fun ImgByTextTestScreen(navController: NavController,
                         modifier = Modifier.clip(RoundedCornerShape(CornerSize(15.dp))),
                         fontSize = 40.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black)
+                        color = Color.Black,
+                    )
                 }
             }
 

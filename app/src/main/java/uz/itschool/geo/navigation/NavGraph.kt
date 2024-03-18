@@ -14,6 +14,7 @@ import uz.itschool.geo.App
 import uz.itschool.geo.localDatabase.AppDataBase
 import uz.itschool.geo.model.CategoryType
 import uz.itschool.geo.screens.HomeScreen
+import uz.itschool.geo.screens.HomeWithPager
 import uz.itschool.geo.screens.ResultScreen
 import uz.itschool.geo.screens.learnScreen.LearnScreen
 import uz.itschool.geo.screens.levelScreen.LevelsScreen
@@ -38,7 +39,7 @@ fun NavGraph(navController: NavHostController){
             SplashScreen(navController)
         }
         composable(route = Screens.Home.route){
-            HomeScreen(navController)
+            HomeWithPager(navController)
         }
 
         composable(

@@ -157,27 +157,37 @@ fun HomeWithPager(navController: NavController){
 
         Column(modifier = Modifier
             .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+            horizontalAlignment = Alignment.CenterHorizontally,) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
             HorizontalPager(state = pagerState ) { categoryHolder->
-                LazyRow(modifier = Modifier.fillMaxWidth(),){
-                    items(categories[categoryHolder].categories){category->
-                        CategoryItem(category = category,
-                            navController = navController)
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = categories[categoryHolder].text,
+                        fontSize = 30.sp,
+                        color = Color.White,)
+                    LazyRow(modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceAround){
+                        items(categories[categoryHolder].categories){category->
+                            CategoryItem(category = category,
+                                navController = navController)
 
-                        Spacer(modifier = Modifier.width(16.dp))
+                            Spacer(modifier = Modifier.width(16.dp))
+                        }
                     }
                 }
+
             }
+        }
+
+
+            Box(modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter
+                ){
             Column(modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)){
-
-
-
-                Spacer(modifier = Modifier.height(420.dp))
+                .padding(16.dp),
+                ){
                 Competition()
                 LearnButton(navController)
 
@@ -193,7 +203,6 @@ fun HomeWithPager(navController: NavController){
 @Composable
 fun CategoryItem(category: CategoryType,
                  navController: NavController){
-
     Box(modifier = Modifier
         .fillMaxWidth()
         .clip(RoundedCornerShape(corner = CornerSize(20.dp)))
