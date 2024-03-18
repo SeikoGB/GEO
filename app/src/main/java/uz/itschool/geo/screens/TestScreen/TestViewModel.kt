@@ -29,8 +29,8 @@ class TestViewModel(val levelId: Int): ViewModel() {
     private var _isWon = MutableLiveData(true)
     val isWon: LiveData<Boolean> = _isWon
 
-    private var _timeProgress = MutableLiveData("20")
-    val timeProgress: LiveData<String> = _timeProgress
+    private var _timeProgress = MutableLiveData(20)
+    val timeProgress: LiveData<Int> = _timeProgress
 
     private var _questionNumber = MutableLiveData(0)
     val questionNumber: LiveData<Int> = _questionNumber
@@ -46,6 +46,9 @@ class TestViewModel(val levelId: Int): ViewModel() {
 
     private var _score = MutableLiveData(0)
     var score: LiveData<Int> = _score
+
+    private var _points = MutableLiveData(0)
+    val points: LiveData<Int> = _points
 
     private var _lives = MutableLiveData(3)
     val lives: LiveData<Int> = _lives
@@ -93,6 +96,7 @@ class TestViewModel(val levelId: Int): ViewModel() {
          if (country == _currentQuestion.value!!){
             _score.value = _score.value!! + 1
             stopTimer()
+             addPoints()
             nextQuestion()
             updateAnswers()
             startTimer()
@@ -119,6 +123,11 @@ class TestViewModel(val levelId: Int): ViewModel() {
         tempAnswers = model.getCountryList(levelId)
     }
 
+    fun addPoints(){
+        val a = (_timeProgress.value!!/2*5).toInt()
+        _points.value = _points.value!!+a
+    }
+
     fun nextQuestion(){
         if (_questionNumber.value!! < listSize - 1){
             _questionNumber.value = _questionNumber.value!! + 1
@@ -138,7 +147,7 @@ class TestViewModel(val levelId: Int): ViewModel() {
         timer = object : CountDownTimer(21*1000L, 1000L){
             override fun onTick(millisUntilFinished: Long) {
                 val seconds = millisUntilFinished / 1000
-                _timeProgress.value = seconds.toString()
+                _timeProgress.value = seconds.toInt()
             }
             override fun onFinish() {
                 _isGameFinished.value = true

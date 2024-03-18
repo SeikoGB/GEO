@@ -38,6 +38,7 @@ fun ResultScreen(navController: NavController,
                  viewModel: TestViewModel){
 
     val isWon = viewModel.isWon.observeAsState().value!!
+    val points = viewModel.points.observeAsState().value!!
 
     var wonMessage by remember {
         mutableStateOf("")
@@ -63,6 +64,8 @@ fun ResultScreen(navController: NavController,
             fontSize = 60.sp,
             //modifier = Modifier.align(Alignment.Center)
             )
+        
+        Text(text = points.toString())
 
         Row(horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth()) {

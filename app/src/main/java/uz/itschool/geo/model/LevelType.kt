@@ -2,14 +2,14 @@ package uz.itschool.geo.model
 
 import uz.itschool.geo.R
 
-enum class LevelType(val text:String, val image:Int) {
-    STUDENT("Student", R.drawable.student),
-    TOURIST("Tourist", R.drawable.traveller),
-    DRIVER("Driver", R.drawable.driver),
-    CAPTAIN("Captain", R.drawable.captain),
-    TEACHER("Teacher", R.drawable.teacher),
-    SCIENTIST("Scientist",R.drawable.chemistry),
-    VIRGIN_OPENER("Land Opener",R.drawable.virgin_opener)
+enum class LevelType(val text:String, val image:Int, val factor: Int) {
+    STUDENT("Student", R.drawable.student, 4),
+    TOURIST("Tourist", R.drawable.traveller, 5),
+    DRIVER("Driver", R.drawable.driver, 6),
+    CAPTAIN("Captain", R.drawable.captain, 7),
+    TEACHER("Teacher", R.drawable.teacher, 8),
+    SCIENTIST("Scientist",R.drawable.chemistry, 9),
+    VIRGIN_OPENER("Land Opener",R.drawable.virgin_opener, 10)
 }
 val allLevelTypes = mutableListOf(
     LevelType.STUDENT,
@@ -29,4 +29,15 @@ fun getLevelImgByText(text: String):Int{
         }
     }
     return levelType.image
+}
+
+fun getGetFactorByText(text: String):Int{
+    var levelType = allLevelTypes[0]
+    for (level in allLevelTypes){
+        if (level.text == text){
+            levelType = level
+            return levelType.factor
+        }
+    }
+    return 0
 }

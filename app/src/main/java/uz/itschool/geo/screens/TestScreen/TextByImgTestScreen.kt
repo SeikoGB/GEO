@@ -166,11 +166,13 @@ fun TextOptionItem(viewModel: TestViewModel, index: Int){
 
 @Composable
 fun TestTopBar(viewModel: TestViewModel){
-    var timeProgress = viewModel.timeProgress.observeAsState().value!!
+    val timeProgress = viewModel.timeProgress.observeAsState().value!!
     val lives = viewModel.lives.observeAsState().value!!
 
-    if (timeProgress.length == 1){
-        timeProgress = "0$timeProgress"
+    var time = "$timeProgress"
+
+    if (timeProgress< 10){
+        time = "0$timeProgress"
     }
 
     Row(modifier = Modifier
@@ -189,12 +191,13 @@ fun TestTopBar(viewModel: TestViewModel){
 
         Box(modifier = Modifier
             .clip(RoundedCornerShape(50))
-            .background(Color.White).padding(3.dp)
+            .background(Color.White)
+            .padding(3.dp)
             .clip(RoundedCornerShape(50))
             .background(myBlue)
             .padding(10.dp),
             contentAlignment = Alignment.Center){
-            Text(text = timeProgress,
+            Text(text = time,
                 color = Color.White,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold
