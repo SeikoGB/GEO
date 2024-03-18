@@ -179,7 +179,8 @@ fun TestTopBar(viewModel: TestViewModel){
         .fillMaxWidth()
         .background(myBlue)
         .padding(10.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly){
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically){
 
         Text(text = "Lives: $lives",
             color = Color.White,

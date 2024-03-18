@@ -52,12 +52,13 @@ fun TextByTextTestScreen(navController: NavController,
             ){
                 Box(modifier = Modifier
                     .align(Alignment.Center)
-                    .clip(RoundedCornerShape(CornerSize(15.dp)))
+                    .clip(RoundedCornerShape(CornerSize(25)))
                     .background(myBlue)
                     .padding(3.dp)
+                    .clip(RoundedCornerShape(CornerSize(25)))
                     .background(Color.White)
-                    .clip(RoundedCornerShape(CornerSize(15.dp)))
-                    .padding(10.dp)){
+                    .padding(10.dp),
+                    contentAlignment = Alignment.Center){
 
                     Text(text = viewModel.getStringQuestion(currentQuestion),
                         modifier = Modifier.clip(RoundedCornerShape(CornerSize(15.dp))),
